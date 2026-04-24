@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glitter Hooves & Fairytails</title>
+    <style>
+        body {
+            font-family: "Georgia", serif;
+            margin: 0;
+            background-color: #f4f9f4;
+            color: #333;
+}
+
+img {
+    margin-bottom: 10px;
+    object-fit: contain;
+    height: auto;
+}
+
+        header {
+            background: linear-gradient(to right, #a8e6cf, #dcedc1);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            color: #4a7c59;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        nav {
+            background-color: #4a7c59;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h2 {
+            color: #4a7c59;
+        }
+
+        .animals {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            background-color: #4a7c59;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Glitter Hooves & Fairytails</h1>
+    <p>A peaceful therapeutic farm filled with gentle animals and healing moments</p>
+</header>
+
+<nav>
+    <a href="#about">About</a>
+    <a href="#animals">Our Animals</a>
+    <a href="#theraputicexperience">Theraputic Experience</a>
+<a href="#specialevents">Special Events</a>
+    <a href="#contact">Contact</a>
+<a href="contact.html" class="btn">Book a Visit</a>
+
+</nav>
+
+<section id="about">
+    <h2>About Our Farm</h2>
+    <p>
+        Welcome to Glitter Hooves & Fairytails, a magical little farm where nature, kindness,
+        and connection come together. Our farm is designed to be a safe, calming space where
+        visitors can relax, heal, and spend time with friendly animals.
+    </p>
+</section>
+
+<section id="animals">
+    <h2>Meet Our Goats</h2>
+    <div class="animals">
+
+        <div class="card">
+            <img src="images/piper.jpg">
+            <h3>Piper 🐐</h3>
+            <p>
+                Piper is playful and curious! She loves exploring, gentle pets,
+                and being around people.
+            </p>
+        </div>
+
+        <div class="card">
+            <img src="images/petunia.jpg">
+            <h3>Petunia 🌸🐐</h3>
+            <p>
+                Petunia is calm and affectionate. She enjoys quiet moments and
+                is perfect for soothing, therapeutic interactions.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section id="therapy">
+    <h2>Therapeutic Experience</h2>
+    <p>
+        Our farm offers peaceful, animal-assisted experiences designed to reduce stress,
+        improve emotional well-being, and create meaningful connections. Spending time
+        with animals like Piper and Petunia can bring comfort, joy, and relaxation.
+    </p>
+</section>
+
+<section id="specialevents">
+    <h2>Special Events</h2>
+    <p>
+        Check back for future events on the farm!
+    </p>
+</section>
+
+<section>
+
+<h2>Request A Visit 🐐</h2>
+
+<form action="https://formspree.io/f/xyzabc123" method="POST">
+
+<label>Your Name</label><br>
+<input type="text" name="name" required><br><br>
+
+<label>Email</label><br>
+<input type="email" name="email" required><br><br>
+
+<label>Message</label><br>
+<textarea name="message" rows="4"></textarea><br><br>
+
+<button type="submit">Request Booking</button>
+
+</form>
+
+</section>
+<footer>
+    <p>© 2026 Glitter Hooves & Fairytails</p>
+</footer>
+
+</body>
+</html>
