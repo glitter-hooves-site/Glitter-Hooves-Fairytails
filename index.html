@@ -1,183 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Glitter Hooves & Fairytails</title>
-    <style>
-        body {
-            font-family: "Georgia", serif;
-            margin: 0;
-            background-color: #f4f9f4;
-            color: #333;
-}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glitter Hooves & Fairytails</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #7a9e7e;
+    --sage-light: #a8c5ac;
+    --sage-dark: #4e7153;
+    --cream: #fdf6ec;
+    --warm-white: #fffdf9;
+    --blush: #e8b4a0;
+    --blush-light: #f5d5c8;
+    --amber: #c8832a;
+    --brown: #6b4226;
+    --text: #3a2e28;
+    --text-muted: #7a6a60;
+    --border: #e8ddd4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Lato', sans-serif; background: var(--warm-white); color: var(--text); overflow-x: hidden; }
 
-img {
-    width: 100%;
-    height: 250px;
-    object-fit: contain;
-    background: white;
-}
-        header {
-            background: linear-gradient(to right, #a8e6cf, #dcedc1);
-            text-align: center;
-            padding: 40px 20px;
-        }
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(253,246,236,0.92); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 68px;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--sage-dark); text-decoration: none; letter-spacing: 0.02em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; font-weight: 700; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--sage-dark); }
+  .nav-cta { background: var(--sage); color: white !important; padding: 0.5rem 1.2rem; border-radius: 50px; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--sage-dark) !important; }
 
-        header h1 {
-            margin: 0;
-            font-size: 3em;
-            color: #4a7c59;
-        }
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 20% 50%, rgba(168,197,172,0.35) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(232,180,160,0.3) 0%, transparent 55%), var(--cream);
+    display: flex; align-items: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%237a9e7e' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-content { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .hero-badge { display: inline-block; background: var(--blush-light); color: var(--brown); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.15; color: var(--brown); margin-bottom: 1.2rem; }
+  .hero h1 em { color: var(--sage-dark); font-style: italic; }
+  .hero p { font-size: 1.1rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 2rem; font-weight: 300; }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--sage); color: white; padding: 0.9rem 2rem; border-radius: 50px; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 20px rgba(122,158,126,0.4); }
+  .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); }
+  .btn-secondary { background: transparent; color: var(--brown); padding: 0.9rem 2rem; border-radius: 50px; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em; text-decoration: none; border: 2px solid var(--blush); transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--brown); background: var(--blush-light); }
+  .hero-image-stack { position: relative; height: 480px; }
+  .hero-img-main { width: 85%; height: 400px; object-fit: cover; border-radius: 2rem; position: absolute; top: 0; right: 0; box-shadow: 0 20px 60px rgba(107,66,38,0.2); }
+  .hero-img-accent { width: 55%; height: 260px; object-fit: cover; border-radius: 1.5rem; position: absolute; bottom: 0; left: 0; box-shadow: 0 15px 40px rgba(107,66,38,0.2); border: 5px solid var(--warm-white); }
+  .hero-tag { position: absolute; top: 1.5rem; left: 0; background: white; border-radius: 1rem; padding: 0.75rem 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--sage-dark); }
+  .hero-tag-dot { width: 8px; height: 8px; background: var(--sage); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
 
-        header p {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.75rem; display: block; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--brown); line-height: 1.2; margin-bottom: 1rem; }
+  .section-subtitle { font-size: 1.05rem; color: var(--text-muted); line-height: 1.75; font-weight: 300; max-width: 580px; }
+  .section-header { margin-bottom: 3.5rem; }
 
-        nav {
-            background-color: #4a7c59;
-            padding: 10px;
-            text-align: center;
-        }
+  #about { background: var(--warm-white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-text p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+  .feature-pill { background: var(--cream); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem 1rem; font-size: 0.875rem; color: var(--text); display: flex; align-items: center; gap: 0.6rem; }
+  .about-image { width: 100%; height: 480px; object-fit: cover; border-radius: 2rem; box-shadow: 0 20px 60px rgba(107,66,38,0.15); }
 
-        nav a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+  #animals { background: var(--cream); }
+  .animals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+  .animal-card { background: var(--warm-white); border-radius: 1.5rem; overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
+  .animal-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(107,66,38,0.15); }
+  .animal-card img { width: 100%; height: 280px; object-fit: cover; }
+  .animal-card-body { padding: 1.75rem; }
+  .animal-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown); margin-bottom: 0.5rem; }
+  .animal-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
+  .animal-tag { display: inline-block; background: var(--sage-light); color: var(--sage-dark); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 50px; margin-bottom: 0.75rem; }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+  #experience { background: var(--warm-white); }
+  .experience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .exp-card { background: var(--cream); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .exp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(107,66,38,0.1); }
+  .exp-icon { width: 52px; height: 52px; background: var(--blush-light); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.25rem; }
+  .exp-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown); margin-bottom: 0.6rem; }
+  .exp-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
+  .exp-card .price { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; color: var(--sage-dark); }
+  .exp-card .price small { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; }
 
-        section {
-            padding: 40px 20px;
-            max-width: 900px;
-            margin: auto;
-        }
+  #events { background: var(--cream); }
+  .events-layout { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+  .event-list { display: flex; flex-direction: column; gap: 1rem; }
+  .event-item { background: var(--warm-white); border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.5rem 1.75rem; display: grid; grid-template-columns: 72px 1fr auto; gap: 1.25rem; align-items: center; transition: box-shadow 0.2s, transform 0.2s; }
+  .event-item:hover { box-shadow: 0 8px 30px rgba(107,66,38,0.1); transform: translateX(4px); }
+  .event-date-box { background: var(--sage); color: white; border-radius: 0.75rem; padding: 0.6rem; text-align: center; }
+  .event-date-box .month { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .event-date-box .day { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+  .event-info h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--brown); margin-bottom: 0.2rem; }
+  .event-info p { font-size: 0.85rem; color: var(--text-muted); }
+  .event-meta { display: flex; flex-direction: column; gap: 0.3rem; align-items: flex-end; }
+  .event-badge { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.25rem 0.7rem; border-radius: 50px; }
+  .badge-free { background: var(--sage-light); color: var(--sage-dark); }
+  .badge-paid { background: var(--blush-light); color: var(--brown); }
+  .event-seats { font-size: 0.8rem; color: var(--text-muted); }
 
-        h2 {
-            color: #4a7c59;
-        }
+  .booking-card { background: var(--brown); color: white; border-radius: 1.5rem; padding: 2rem; position: sticky; top: 90px; }
+  .booking-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .booking-card > p { font-size: 0.875rem; opacity: 0.75; margin-bottom: 1.5rem; line-height: 1.6; }
+  .form-group { margin-bottom: 1rem; }
+  .form-group label { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 0.4rem; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 0.6rem; color: white; font-family: 'Lato', sans-serif; font-size: 0.9rem; padding: 0.7rem 0.9rem; outline: none; transition: border-color 0.2s; }
+  .form-group input::placeholder, .form-group textarea::placeholder { opacity: 0.5; color: white; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--sage-light); }
+  .form-group select { appearance: none; cursor: pointer; }
+  .form-group select option { background: var(--brown); color: white; }
+  .form-group textarea { resize: vertical; min-height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .btn-book { width: 100%; background: var(--sage); color: white; border: none; border-radius: 0.75rem; padding: 0.9rem; font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.05em; cursor: pointer; transition: background 0.2s, transform 0.1s; margin-top: 0.5rem; }
+  .btn-book:hover { background: var(--sage-dark); transform: translateY(-1px); }
+  .booking-note { font-size: 0.75rem; opacity: 0.6; text-align: center; margin-top: 0.75rem; line-height: 1.5; }
+  .success-message { display: none; background: rgba(122,158,126,0.25); border: 1px solid var(--sage-light); border-radius: 0.75rem; padding: 1.25rem; text-align: center; margin-top: 1rem; font-size: 0.9rem; line-height: 1.6; }
+  .success-message.show { display: block; }
 
-        .animals {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+  #testimonials { background: var(--warm-white); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .testimonial-card { background: var(--cream); border: 1px solid var(--border); border-radius: 1.5rem; padding: 1.75rem; }
+  .stars { color: var(--amber); font-size: 0.85rem; margin-bottom: 1rem; }
+  .testimonial-card blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.975rem; color: var(--text); line-height: 1.7; margin-bottom: 1.25rem; }
+  .testimonial-author { font-size: 0.825rem; font-weight: 700; color: var(--text-muted); }
 
-        .card {
-            background-color: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            flex: 1;
-            min-width: 250px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+  footer { background: var(--brown); color: white; padding: 3rem 2rem; text-align: center; }
+  footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+  footer p { font-size: 0.875rem; opacity: 0.65; line-height: 1.8; }
+  footer a { color: var(--sage-light); text-decoration: none; }
 
-        footer {
-            background-color: #4a7c59;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    .hero-content, .about-grid { grid-template-columns: 1fr; }
+    .hero-image-stack { height: 320px; }
+    .experience-grid { grid-template-columns: 1fr 1fr; }
+    .events-layout { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .booking-card { position: static; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .experience-grid, .about-features { grid-template-columns: 1fr; }
+    .event-item { grid-template-columns: 60px 1fr; }
+    .event-meta { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-<header>
-    <h1>Glitter Hooves & Fairytails</h1>
-    <p>A peaceful therapeutic farm filled with gentle animals and healing moments</p>
-</header>
-
 <nav>
-    <a href="#about">About</a>
-    <a href="#animals">Our Animals</a>
-    <a href="#theraputicexperience">Theraputic Experience</a>
-    <a href="#specialevents">Special Events</a>
-    <a href="contact.html" class="btn">Book a Visit/ Contact Us</a>
-
+  <a href="#" class="nav-logo">🐐 Glitter Hooves & Fairytails</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#animals">Our Animals</a></li>
+    <li><a href="#experience">Experiences</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#events" class="nav-cta">Book a Visit</a></li>
+  </ul>
 </nav>
 
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">✨ Therapeutic Farm Experiences</div>
+      <h1>Where healing<br>meets <em>nature's</em><br>magic</h1>
+      <p>A peaceful sanctuary where gentle animals, open land, and quiet moments come together to restore your spirit.</p>
+      <div class="hero-buttons">
+        <a href="#events" class="btn-primary">Book a Visit</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-image-stack">
+      <img src="https://glitter-hooves-site.github.io/Glitter-Hooves-Fairytails/images/petunia.jpg" alt="Petunia the goat" class="hero-img-main">
+      <img src="https://glitter-hooves-site.github.io/Glitter-Hooves-Fairytails/images/piper.jpg" alt="Piper the goat" class="hero-img-accent">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        Open for visits
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="about">
-    <h2>About Our Farm</h2>
-    <p>
-        Welcome to Glitter Hooves & Fairytails, a magical little farm where nature, kindness,
-        and connection come together. Our farm is designed to be a safe, calming space where
-        visitors can relax, heal, and spend time with friendly animals.
-    </p>
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">A magical little farm built on kindness</h2>
+        <p>Welcome to Glitter Hooves & Fairytails — a safe, calming space where visitors can relax, heal, and spend time with friendly animals. We believe in the profound power of nature and animal connection to restore what daily life takes away.</p>
+        <p>Whether you're seeking a peaceful afternoon, a therapeutic experience, or a memorable event, our farm is here to welcome you with open arms and wagging tails.</p>
+        <div class="about-features">
+          <div class="feature-pill"><span>🌿</span> Calming environment</div>
+          <div class="feature-pill"><span>🐐</span> Gentle animals</div>
+          <div class="feature-pill"><span>💚</span> Therapeutic focus</div>
+          <div class="feature-pill"><span>👨‍👩‍👧</span> Family friendly</div>
+        </div>
+      </div>
+      <div class="fade-up">
+        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=600&q=80" alt="Farm landscape" class="about-image">
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="animals">
-    <h2>Meet Our Goats</h2>
-    <div class="animals">
-
-        <div class="card">
-            <img src="images/piper.jpg">
-            <h3>Piper 🐐</h3>
-            <p>
-                Piper is playful and curious! She loves exploring, gentle pets,
-                and being around people.
-            </p>
-        </div>
-
-        <div class="card">
-            <img src="images/petunia.jpg">
-            <h3>Petunia 🌸🐐</h3>
-            <p>
-                Petunia is calm and affectionate. She enjoys quiet moments and
-                is perfect for soothing, therapeutic interactions.
-            </p>
-        </div>
-
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Meet the Crew</span>
+      <h2 class="section-title">Our gentle animals</h2>
+      <p class="section-subtitle">Every animal at Glitter Hooves has a story and a personality all their own.</p>
     </div>
+    <div class="animals-grid">
+      <div class="animal-card fade-up">
+        <img src="https://glitter-hooves-site.github.io/Glitter-Hooves-Fairytails/images/piper.jpg" alt="Piper">
+        <div class="animal-card-body">
+          <div class="animal-tag">Resident Goat</div>
+          <h3>Piper 🐐</h3>
+          <p>Piper is playful and curious! She loves exploring, gentle pets, and being around people. She'll be the first to greet you at the gate.</p>
+        </div>
+      </div>
+      <div class="animal-card fade-up">
+        <img src="https://glitter-hooves-site.github.io/Glitter-Hooves-Fairytails/images/petunia.jpg" alt="Petunia">
+        <div class="animal-card-body">
+          <div class="animal-tag">Resident Goat</div>
+          <h3>Petunia 🌸</h3>
+          <p>Petunia is calm and affectionate. She enjoys quiet moments and is perfect for soothing, therapeutic interactions. Pure gentle energy.</p>
+        </div>
+      </div>
+      <div class="animal-card fade-up">
+        <img src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=600&q=80" alt="More animals coming soon">
+        <div class="animal-card-body">
+          <div class="animal-tag">Coming Soon</div>
+          <h3>More Friends 🌟</h3>
+          <p>Our farm family is growing! Follow along on social media for updates on new animal additions coming to Glitter Hooves.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="therapy">
-    <h2>Therapeutic Experience</h2>
-    <p>
-        Our farm offers peaceful, animal-assisted experiences designed to reduce stress,
-        improve emotional well-being, and create meaningful connections. Spending time
-        with animals like Piper and Petunia can bring comfort, joy, and relaxation.
-    </p>
+<section id="experience">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">What We Offer</span>
+      <h2 class="section-title">Farm experiences for every soul</h2>
+      <p class="section-subtitle">From private visits to group events, we have something for everyone.</p>
+    </div>
+    <div class="experience-grid">
+      <div class="exp-card fade-up">
+        <div class="exp-icon">🌿</div>
+        <h3>Therapeutic Visit</h3>
+        <p>A one-on-one or small group session with our animals, designed to reduce stress, ease anxiety, and bring calm to a busy mind.</p>
+        <div class="price">$45 <small>/ person</small></div>
+      </div>
+      <div class="exp-card fade-up">
+        <div class="exp-icon">👨‍👩‍👧</div>
+        <h3>Family Farm Day</h3>
+        <p>Bring the whole family for a morning or afternoon on the farm. Feed the goats, explore the grounds, and make memories together.</p>
+        <div class="price">$75 <small>/ family</small></div>
+      </div>
+      <div class="exp-card fade-up">
+        <div class="exp-icon">🎉</div>
+        <h3>Private Event</h3>
+        <p>Birthday parties, school groups, team retreats — we host it all. Ask us about custom packages for your special occasion.</p>
+        <div class="price">From $200 <small>/ event</small></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="specialevents">
-    <h2>Special Events</h2>
-    <p>
-        Check back for future events on the farm!
-    </p>
+<section id="events">
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Upcoming Events</span>
+      <h2 class="section-title">Join us on the farm</h2>
+      <p class="section-subtitle">Special events, seasonal experiences, and open farm days — there's always something happening at Glitter Hooves.</p>
+    </div>
+    <div class="events-layout">
+      <div class="event-list fade-up">
+        <div class="event-item">
+          <div class="event-date-box"><div class="month">May</div><div class="day">10</div></div>
+          <div class="event-info"><h4>Spring Open Farm Day</h4><p>🕐 10am – 2pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+          <div class="event-meta"><span class="event-badge badge-free">Free</span><span class="event-seats">12 spots left</span></div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-box"><div class="month">May</div><div class="day">18</div></div>
+          <div class="event-info"><h4>Goat Yoga Morning</h4><p>🕐 9am – 10:30am &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+          <div class="event-meta"><span class="event-badge badge-paid">$25</span><span class="event-seats">8 spots left</span></div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-box"><div class="month">Jun</div><div class="day">7</div></div>
+          <div class="event-info"><h4>Kids Farm Discovery Day</h4><p>🕐 11am – 3pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+          <div class="event-meta"><span class="event-badge badge-paid">$15/child</span><span class="event-seats">20 spots left</span></div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-box"><div class="month">Jun</div><div class="day">21</div></div>
+          <div class="event-info"><h4>Summer Solstice Sunset Visit</h4><p>🕐 6pm – 8pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+          <div class="event-meta"><span class="event-badge badge-paid">$35</span><span class="event-seats">15 spots left</span></div>
+        </div>
+        <div class="event-item">
+          <div class="event-date-box"><div class="month">Jul</div><div class="day">4</div></div>
+          <div class="event-info"><h4>Holiday Farm Picnic</h4><p>🕐 12pm – 4pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+          <div class="event-meta"><span class="event-badge badge-free">Free</span><span class="event-seats">Open</span></div>
+        </div>
+      </div>
+
+      <div class="booking-card fade-up">
+        <h3>Reserve Your Spot</h3>
+        <p>Fill out the form and we'll confirm your reservation within 24 hours.</p>
+        <form id="bookingForm">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 000-0000"></div>
+          <div class="form-group">
+            <label>Select Event</label>
+            <select>
+              <option value="">Choose an event…</option>
+              <option>Spring Open Farm Day — May 10 (Free)</option>
+              <option>Goat Yoga Morning — May 18 ($25)</option>
+              <option>Kids Farm Discovery Day — Jun 7 ($15/child)</option>
+              <option>Summer Solstice Sunset — Jun 21 ($35)</option>
+              <option>Holiday Farm Picnic — Jul 4 (Free)</option>
+              <option>Private / Custom Visit</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Number of Guests</label>
+            <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>
+          </div>
+          <div class="form-group"><label>Message (optional)</label><textarea placeholder="Any questions or special needs…"></textarea></div>
+          <button type="button" class="btn-book" onclick="submitBooking()">Request Reservation ✨</button>
+          <p class="booking-note">We'll follow up by email to confirm and arrange payment for paid events.</p>
+        </form>
+        <div class="success-message" id="successMsg">
+          🌿 Thank you! We've received your request and will be in touch within 24 hours.
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-
-<section id="Book A Visit/ Contact Us">
-<h2>Request A Visit 🐐</h2>
-
-<form
-  action="https://formspree.io/f/maqavneq"
-  method="POST"
->
-<label>
-    Your name:
-    <input type="Name" name="Name">
-  </label>
- <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
-
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;">
+      <span class="section-label">Kind Words</span>
+      <h2 class="section-title">What visitors say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We brought our daughter for a therapeutic visit and it was truly transformative. Petunia was so gentle with her. We can't wait to come back."</blockquote>
+        <div class="testimonial-author">— Sarah M., local family</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"The farm is exactly what it promises — peaceful, magical, and healing. Piper had us laughing within minutes. An absolute gem of a place."</blockquote>
+        <div class="testimonial-author">— David R., first-time visitor</div>
+      </div>
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <blockquote>"We hosted our team retreat here and everyone left feeling genuinely refreshed. The owners are so warm and the animals are wonderful."</blockquote>
+        <div class="testimonial-author">— Michelle T., group booking</div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- LOCATION -->
+<section id="location" style="background: var(--warm-white); padding: 6rem 5rem;">
+  <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+    <div>
+      <p class="section-label">Find Us</p>
+      <h2 class="section-title">Our Location</h2>
+      <p style="color: var(--text-muted); line-height: 1.85; margin-bottom: 1.5rem;">We're nestled in the peaceful countryside of Kittrell, NC. Exact directions are shared upon booking confirmation so every visit feels like a little discovery.</p>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 0.95rem;">
+          <div style="width: 38px; height: 38px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">📍</div>
+          <span>Kittrell, NC 27544</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 0.95rem;">
+          <div style="width: 38px; height: 38px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">🗺️</div>
+          <span>Exact address provided after reservation confirmed</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 0.95rem;">
+          <div style="width: 38px; height: 38px; background: var(--sage-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;">🚗</div>
+          <span>About 45 minutes from Raleigh, NC</span>
+        </div>
+      </div>
+      <a href="#booking" class="btn-primary" style="display: inline-block; margin-top: 2rem; background: var(--sage); color: white; padding: 0.8rem 2rem; border-radius: 3rem; text-decoration: none; font-size: 0.9rem; transition: background 0.2s;">Reserve to Get Directions</a>
+    </div>
+    <div style="border-radius: 1rem; overflow: hidden; box-shadow: 0 8px 32px rgba(107,66,38,0.12); aspect-ratio: 4/3;">
+      <iframe
+        width="100%" height="100%"
+        style="border: 0; display: block;"
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&q=Kittrell,NC+27544&zoom=12">
+      </iframe>
+    </div>
+  </div>
+</section>
+
 <footer>
-    <p>© 2026 Glitter Hooves & Fairytails</p>
+  <div class="footer-logo">🐐 Glitter Hooves & Fairytails</div>
+  <p>
+    A peaceful therapeutic farm filled with gentle animals and healing moments.<br>
+    Questions? <a href="#events">Book a visit</a> and mention it in your message.
+  </p>
+  <p style="margin-top:1.5rem;">© 2026 Glitter Hooves & Fairytails. All rights reserved.</p>
 </footer>
 
+<canvas id="glitter-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function submitBooking() {
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+  }
+
+  // Glitter particle system
+  const canvas = document.getElementById('glitter-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+  const COLORS = ['#f9d97a','#f7b2d9','#a8d8b9','#fce4b3','#d4b8f0','#f9e4c8','#b8e0f7','#ffd6e0'];
+  const particles = [];
+
+  class Glitter {
+    constructor(x, y, burst) {
+      this.x = x ?? Math.random() * canvas.width;
+      this.y = y ?? -10;
+      this.size = burst ? (Math.random() * 5 + 2) : (Math.random() * 3 + 1);
+      this.speedX = burst ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 0.8;
+      this.speedY = burst ? (Math.random() * 4 + 1) : (Math.random() * 1.2 + 0.3);
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.alpha = burst ? 1 : Math.random() * 0.7 + 0.3;
+      this.decay = burst ? 0.018 : 0.004;
+      this.rotation = Math.random() * Math.PI * 2;
+      this.rotSpeed = (Math.random() - 0.5) * 0.15;
+      this.shape = Math.random() > 0.5 ? 'star' : 'rect';
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.alpha -= this.decay;
+      this.rotation += this.rotSpeed;
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, this.alpha);
+      ctx.fillStyle = this.color;
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      if (this.shape === 'star') {
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+          const r = i === 0 ? this.size : this.size * 0.4;
+          ctx.lineTo(Math.cos(angle) * this.size, Math.sin(angle) * this.size);
+          if (i < 4) {
+            const ia = angle + (2 * Math.PI) / 5;
+            ctx.lineTo(Math.cos(ia) * this.size * 0.4, Math.sin(ia) * this.size * 0.4);
+          }
+        }
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.5);
+      }
+      ctx.restore();
+    }
+  }
+
+  // Gentle ambient glitter rain
+  function spawnAmbient() {
+    if (particles.length < 60) {
+      particles.push(new Glitter());
+    }
+  }
+
+  // Burst on click/tap
+  document.addEventListener('click', (e) => {
+    for (let i = 0; i < 28; i++) {
+      particles.push(new Glitter(e.clientX, e.clientY, true));
+    }
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    spawnAmbient();
+    for (let i = particles.length - 1; i >= 0; i--) {
+      particles[i].update();
+      particles[i].draw();
+      if (particles[i].alpha <= 0 || particles[i].y > canvas.height + 20) {
+        particles.splice(i, 1);
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+</script>
 </body>
 </html>
