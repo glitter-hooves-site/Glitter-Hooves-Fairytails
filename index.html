@@ -82,7 +82,7 @@
   .animals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
   .animal-card { background: var(--warm-white); border-radius: 1.5rem; overflow: hidden; border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s; }
   .animal-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(107,66,38,0.15); }
-  .animal-card img { width: 100%; height: 280px; object-fit: cover; }
+  .animal-card img { width: 100%; height: 360px; object-fit: cover; object-position: center top; }
   .animal-card-body { padding: 1.75rem; }
   .animal-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown); margin-bottom: 0.5rem; }
   .animal-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
@@ -162,9 +162,9 @@
     .event-meta { display: none; }
     .form-row { grid-template-columns: 1fr; }
   }
-  .field-error { display: none; color: #c0392b; font-size: 0.78rem; margin-top: 0.3rem; }
+  .field-error { display: none; color: #ffb3ae; font-size: 0.78rem; margin-top: 0.3rem; font-weight: 700; }
   .field-error.visible { display: block; }
-  input.invalid, select.invalid, textarea.invalid { border-color: #c0392b !important; }
+  input.invalid, select.invalid, textarea.invalid { border-color: #ffb3ae !important; background: rgba(255,120,100,0.15) !important; }
 </style>
 </head>
 <body>
@@ -292,33 +292,7 @@
       <p class="section-subtitle">Special events, seasonal experiences, and open farm days — there's always something happening at Glitter Hooves.</p>
     </div>
     <div class="events-layout">
-      <div class="event-list fade-up">
-        <div class="event-item">
-          <div class="event-date-box"><div class="month">May</div><div class="day">10</div></div>
-          <div class="event-info"><h4>Spring Open Farm Day</h4><p>🕐 10am – 2pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
-          <div class="event-meta"><span class="event-badge badge-free">Free</span><span class="event-seats">12 spots left</span></div>
-        </div>
-        <div class="event-item">
-          <div class="event-date-box"><div class="month">May</div><div class="day">18</div></div>
-          <div class="event-info"><h4>Goat Yoga Morning</h4><p>🕐 9am – 10:30am &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
-          <div class="event-meta"><span class="event-badge badge-paid">$25</span><span class="event-seats">8 spots left</span></div>
-        </div>
-        <div class="event-item">
-          <div class="event-date-box"><div class="month">Jun</div><div class="day">7</div></div>
-          <div class="event-info"><h4>Kids Farm Discovery Day</h4><p>🕐 11am – 3pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
-          <div class="event-meta"><span class="event-badge badge-paid">$15/child</span><span class="event-seats">20 spots left</span></div>
-        </div>
-        <div class="event-item">
-          <div class="event-date-box"><div class="month">Jun</div><div class="day">21</div></div>
-          <div class="event-info"><h4>Summer Solstice Sunset Visit</h4><p>🕐 6pm – 8pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
-          <div class="event-meta"><span class="event-badge badge-paid">$35</span><span class="event-seats">15 spots left</span></div>
-        </div>
-        <div class="event-item">
-          <div class="event-date-box"><div class="month">Jul</div><div class="day">4</div></div>
-          <div class="event-info"><h4>Holiday Farm Picnic</h4><p>🕐 12pm – 4pm &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
-          <div class="event-meta"><span class="event-badge badge-free">Free</span><span class="event-seats">Open</span></div>
-        </div>
-      </div>
+      <div class="event-list fade-up" id="event-list"></div>
 
       <div class="booking-card fade-up">
         <h3>Reserve Your Spot</h3>
@@ -350,12 +324,6 @@
             <label>Select Event</label>
             <select id="event-select">
               <option value="">Choose an event…</option>
-              <option value="spring-open">Spring Open Farm Day — May 10 (Free)</option>
-              <option value="goat-yoga">Goat Yoga Morning — May 18 ($25)</option>
-              <option value="kids-day">Kids Farm Discovery Day — Jun 7 ($15/child)</option>
-              <option value="solstice">Summer Solstice Sunset — Jun 21 ($35)</option>
-              <option value="picnic">Holiday Farm Picnic — Jul 4 (Free)</option>
-              <option value="private">Private / Custom Visit</option>
             </select>
             <span class="field-error" id="event-err">Please select an event.</span>
           </div>
@@ -383,6 +351,7 @@
   </div>
 </section>
 
+<!-- REVIEWS SECTION — commented out, uncomment to re-enable
 <section id="testimonials">
   <div class="container">
     <div class="section-header fade-up" style="text-align:center;">
@@ -408,6 +377,7 @@
     </div>
   </div>
 </section>
+-->
 
 <!-- LOCATION -->
 <section id="location" style="background: var(--warm-white); padding: 6rem 5rem;">
@@ -456,6 +426,68 @@
 <canvas id="glitter-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;"></canvas>
 
 <script>
+  // =============================================
+  // EVENTS DATA
+  // =============================================
+  // This is the only place you need to edit to
+  // add, remove, or update events. Changes here
+  // will automatically update BOTH the event
+  // calendar on the page AND the dropdown in
+  // the reservation form.
+  //
+  // HOW TO ADD AN EVENT:
+  //   Copy one of the lines below and paste it
+  //   before the closing ]; bracket. Fill in:
+  //     month — 3-letter abbreviation (Jan, Feb, Mar...)
+  //     day   — day number as a string ('3', '14', etc.)
+  //     title — name of the event
+  //     time  — time range ('10am - 12pm')
+  //     price — 'Free' or a dollar amount ('$25')
+  //     seats — availability note ('10 spots left' or 'Open')
+  //
+  // HOW TO REMOVE AN EVENT:
+  //   Delete the entire line for that event.
+  //
+  // HOW TO EDIT AN EVENT:
+  //   Update the values on its line directly.
+  // =============================================
+  const EVENTS = [
+    { month: 'May', day: '10', title: 'Spring Open Farm Day',       time: '10am – 2pm',   price: 'Free',     seats: '12 spots left' },
+    { month: 'May', day: '18', title: 'Goat Yoga Morning',          time: '9am – 10:30am', price: '$25',      seats: '8 spots left'  },
+    { month: 'Jun', day: '7',  title: 'Kids Farm Discovery Day',    time: '11am – 3pm',   price: '$15/child', seats: '20 spots left' },
+    { month: 'Jun', day: '21', title: 'Summer Solstice Sunset Visit', time: '6pm – 8pm',  price: '$35',      seats: '15 spots left' },
+    { month: 'Jul', day: '4',  title: 'Holiday Farm Picnic',        time: '12pm – 4pm',   price: 'Free',     seats: 'Open'          },
+  ];
+
+  // Render event calendar cards
+  const eventList = document.getElementById('event-list');
+  EVENTS.forEach(ev => {
+    const free = ev.price === 'Free';
+    eventList.innerHTML += `
+      <div class="event-item">
+        <div class="event-date-box"><div class="month">${ev.month}</div><div class="day">${ev.day}</div></div>
+        <div class="event-info"><h4>${ev.title}</h4><p>🕐 ${ev.time} &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p></div>
+        <div class="event-meta">
+          <span class="event-badge ${free ? 'badge-free' : 'badge-paid'}">${ev.price}</span>
+          <span class="event-seats">${ev.seats}</span>
+        </div>
+      </div>`;
+  });
+
+  // Populate booking dropdown from the same data
+  const sel = document.getElementById('event-select');
+  EVENTS.forEach((ev, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `${ev.title} — ${ev.month} ${ev.day} (${ev.price})`;
+    sel.appendChild(opt);
+  });
+  // Always append a private visit option at the end
+  const privateOpt = document.createElement('option');
+  privateOpt.value = 'private';
+  privateOpt.textContent = 'Private / Custom Visit';
+  sel.appendChild(privateOpt);
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
