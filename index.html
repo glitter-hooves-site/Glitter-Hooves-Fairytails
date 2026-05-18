@@ -343,7 +343,7 @@
             <span class="field-error" id="guests-err">Please select the number of guests.</span>
           </div>
           <div class="form-group"><label>Message (optional)</label><textarea id="message" name="message" placeholder="Any questions or special needs…"></textarea></div>
-          <button type="submit" class="btn-book" onclick="submitBooking()">Request Reservation ✨</button>
+          <button type="button" class="btn-book" onclick="submitBooking()">Request Reservation ✨</button>
           <p class="booking-note">We'll follow up by email to confirm and arrange payment for paid events.</p>
         </form>
         <div class="success-message" id="successMsg">
@@ -505,32 +505,73 @@
   }
 
   function submitBooking() {
-    let valid = true;
+  let valid = true;
 
-    const fname = document.getElementById('fname');
-    const lname = document.getElementById('lname');
-    const email = document.getElementById('email');
-    const phone = document.getElementById('phone');
-    const eventSel = document.getElementById('event-select');
-    const guests = document.getElementById('guests');
+  const fname = document.getElementById('fname');
+  const lname = document.getElementById('lname');
+  const email = document.getElementById('email');
+  const phone = document.getElementById('phone');
+  const eventSel = document.getElementById('event-select');
+  const guests = document.getElementById('guests');
 
-    // First name
-    if (!fname.value.trim()) { showError('fname','fname-err'); valid = false; } else { clearError('fname','fname-err'); }
-    // Last name
-    if (!lname.value.trim()) { showError('lname','lname-err'); valid = false; } else { clearError('lname','lname-err'); }
-    // Email
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-    if (!emailOk) { showError('email','email-err'); valid = false; } else { clearError('email','email-err'); }
-    // Phone — allow blanks but validate format if provided
-    const phoneVal = phone.value.trim();
-    const phoneOk = !phoneVal || /^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
-    if (!phoneOk) { showError('phone','phone-err'); valid = false; } else { clearError('phone','phone-err'); }
-    // Event
-    if (!eventSel.value) { showError('event-select','event-err'); valid = false; } else { clearError('event-select','event-err'); }
-    // Guests
-    if (!guests.value) { showError('guests','guests-err'); valid = false; } else { clearError('guests','guests-err'); }
+  // First name
+  if (!fname.value.trim()) {
+    showError('fname','fname-err');
+    valid = false;
+  } else {
+    clearError('fname','fname-err');
+  }
 
-    if (!valid) return;
+  // Last name
+  if (!lname.value.trim()) {
+    showError('lname','lname-err');
+    valid = false;
+  } else {
+    clearError('lname','lname-err');
+  }
+
+  // Email
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+
+  if (!emailOk) {
+    showError('email','email-err');
+    valid = false;
+  } else {
+    clearError('email','email-err');
+  }
+
+  // Phone
+  const phoneVal = phone.value.trim();
+  const phoneOk = !phoneVal || /^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
+
+  if (!phoneOk) {
+    showError('phone','phone-err');
+    valid = false;
+  } else {
+    clearError('phone','phone-err');
+  }
+
+  // Event
+  if (!eventSel.value) {
+    showError('event-select','event-err');
+    valid = false;
+  } else {
+    clearError('event-select','event-err');
+  }
+
+  // Guests
+  if (!guests.value) {
+    showError('guests','guests-err');
+    valid = false;
+  } else {
+    clearError('guests','guests-err');
+  }
+
+  if (!valid) return;
+
+  // Submit to Formspree
+  document.getElementById('bookingForm').submit();
+}
 
     document.getElementById('bookingForm').submit();
   }
