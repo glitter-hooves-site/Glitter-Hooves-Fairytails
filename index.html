@@ -297,39 +297,42 @@
       <div class="booking-card fade-up">
         <h3>Reserve Your Spot</h3>
         <p>Fill out the form and we'll confirm your reservation within 24 hours.</p>
-        <form id="bookingForm" novalidate>
+        <form id="bookingForm"
+      action="https://formspree.io/f/maqavneq"
+      method="POST"
+      novalidate>
           <div class="form-row">
             <div class="form-group">
               <label>First Name</label>
-              <input type="text" id="fname" placeholder="Jane">
+              <input type="text" id="fname" name="first_name" placeholder="Jane">
               <span class="field-error" id="fname-err">Please enter your first name.</span>
             </div>
             <div class="form-group">
               <label>Last Name</label>
-              <input type="text" id="lname" placeholder="Smith">
+              <input type="text" id="lname" name="last_name" placeholder="Smith">
               <span class="field-error" id="lname-err">Please enter your last name.</span>
             </div>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" id="email" placeholder="you@email.com">
+            <input type="email" id="email" name="email" placeholder="you@email.com">
             <span class="field-error" id="email-err">Please enter a valid email address.</span>
           </div>
           <div class="form-group">
             <label>Phone</label>
-            <input type="tel" id="phone" placeholder="(555) 000-0000">
+            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
             <span class="field-error" id="phone-err">Please enter a valid phone number.</span>
           </div>
           <div class="form-group">
             <label>Select Event</label>
-            <select id="event-select">
+            <select id="event-select" name="event">
               <option value="">Choose an event…</option>
             </select>
             <span class="field-error" id="event-err">Please select an event.</span>
           </div>
           <div class="form-group">
             <label>Number of Guests</label>
-            <select id="guests">
+            <select id="guests" name="guests">
               <option value="">Select…</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -339,8 +342,8 @@
             </select>
             <span class="field-error" id="guests-err">Please select the number of guests.</span>
           </div>
-          <div class="form-group"><label>Message (optional)</label><textarea id="message" placeholder="Any questions or special needs…"></textarea></div>
-          <button type="button" class="btn-book" onclick="submitBooking()">Request Reservation ✨</button>
+          <div class="form-group"><label>Message (optional)</label><textarea id="message" name="message" placeholder="Any questions or special needs…"></textarea></div>
+          <button type="submit" class="btn-book" onclick="submitBooking()">Request Reservation ✨</button>
           <p class="booking-note">We'll follow up by email to confirm and arrange payment for paid events.</p>
         </form>
         <div class="success-message" id="successMsg">
@@ -417,7 +420,7 @@
 <footer>
   <div class="footer-logo">🐐 Glitter Hooves & Fairytails</div>
   <p>
-    A peaceful therapeutic farm filled with gentle animals and healing moments.<br>
+    A peaceful space filled with gentle animals and healing moments.<br>
     Questions? <a href="#events">Book a visit</a> and mention it in your message.
   </p>
   <p style="margin-top:1.5rem;">© 2026 Glitter Hooves & Fairytails. All rights reserved.</p>
@@ -452,8 +455,6 @@
   //   Update the values on its line directly.
   // =============================================
   const EVENTS = [
-    { month: 'May', day: '10', title: 'Spring Open Farm Day',       time: '10am – 2pm',   price: 'Free',     seats: '12 spots left' },
-    { month: 'May', day: '18', title: 'Goat Yoga Morning',          time: '9am – 10:30am', price: '$25',      seats: '8 spots left'  },
     { month: 'Jun', day: '7',  title: 'Kids Farm Discovery Day',    time: '11am – 3pm',   price: '$15/child', seats: '20 spots left' },
     { month: 'Jun', day: '21', title: 'Summer Solstice Sunset Visit', time: '6pm – 8pm',  price: '$35',      seats: '15 spots left' },
     { month: 'Jul', day: '4',  title: 'Holiday Farm Picnic',        time: '12pm – 4pm',   price: 'Free',     seats: 'Open'          },
@@ -504,7 +505,6 @@
   }
 
   function submitBooking() {
-    <form action="https://formspree.io/f/maqavneq" method="POST">
     let valid = true;
 
     const fname = document.getElementById('fname');
@@ -532,8 +532,7 @@
 
     if (!valid) return;
 
-    document.getElementById('bookingForm').style.display = 'none';
-    document.getElementById('successMsg').classList.add('show');
+    document.getElementById('bookingForm').submit();
   }
 
   // Glitter particle system
