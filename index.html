@@ -504,7 +504,7 @@
     document.getElementById(errId).classList.add('visible');
   }
 
-  function submitBooking() {
+function submitBooking() {
   let valid = true;
 
   const fname = document.getElementById('fname');
@@ -514,67 +514,21 @@
   const eventSel = document.getElementById('event-select');
   const guests = document.getElementById('guests');
 
-  // First name
-  if (!fname.value.trim()) {
-    showError('fname','fname-err');
-    valid = false;
-  } else {
-    clearError('fname','fname-err');
-  }
-
-  // Last name
-  if (!lname.value.trim()) {
-    showError('lname','lname-err');
-    valid = false;
-  } else {
-    clearError('lname','lname-err');
-  }
-
-  // Email
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-
-  if (!emailOk) {
-    showError('email','email-err');
-    valid = false;
-  } else {
-    clearError('email','email-err');
-  }
-
-  // Phone
   const phoneVal = phone.value.trim();
   const phoneOk = !phoneVal || /^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
 
-  if (!phoneOk) {
-    showError('phone','phone-err');
-    valid = false;
-  } else {
-    clearError('phone','phone-err');
-  }
-
-  // Event
-  if (!eventSel.value) {
-    showError('event-select','event-err');
-    valid = false;
-  } else {
-    clearError('event-select','event-err');
-  }
-
-  // Guests
-  if (!guests.value) {
-    showError('guests','guests-err');
-    valid = false;
-  } else {
-    clearError('guests','guests-err');
-  }
+  if (!fname.value.trim()) valid = false;
+  if (!lname.value.trim()) valid = false;
+  if (!emailOk) valid = false;
+  if (!phoneOk) valid = false;
+  if (!eventSel.value) valid = false;
+  if (!guests.value) valid = false;
 
   if (!valid) return;
 
-  // Submit to Formspree
   document.getElementById('bookingForm').submit();
 }
-
-    document.getElementById('bookingForm').submit();
-  }
 
   // Glitter particle system
   const canvas = document.getElementById('glitter-canvas');
