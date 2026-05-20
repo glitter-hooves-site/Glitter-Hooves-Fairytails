@@ -244,18 +244,8 @@ button:hover {
 
 .photo-scroll .scroll-track img {
   flex: 0 0 auto;
-  width: 180px;      /* smaller = fixed control */
-  height: 130px;     /* forces consistency */
-  object-fit: cover; /* prevents stretching */
-  border-radius: 1rem;
-  scroll-snap-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-/* each image is LOCKED size */
-.scroll-track img {
-  flex: 0 0 auto;
-  width: 160px;      /* 👈 smaller fixed size */
-  height: 110px;     /* 👈 forces consistency */
+  width: 160px;
+  height: 110px;
   object-fit: cover;
   border-radius: 1rem;
   scroll-snap-align: center;
@@ -264,8 +254,9 @@ button:hover {
   transition: transform 0.2s ease;
 }
 
-.scroll-track img:hover {
+.photo-scroll .scroll-track img:hover {
   transform: scale(1.05);
+}
 }
 @media (max-width: 600px) {
   .scroll-track img {
