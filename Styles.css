@@ -270,3 +270,9 @@ button:hover {
 
   align-items: center;
 }
+@media (max-width: 600px) {
+  .scroll-track img {
+    width: 180px;
+    height: 130px;
+  }
+}
