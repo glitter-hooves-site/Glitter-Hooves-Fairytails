@@ -222,3 +222,42 @@ button {
 button:hover {
     background: #ff7c9d;
 }
+.photo-scroll {
+    padding: 60px 20px;
+    background: #f4f9f4;
+}
+
+.photo-scroll h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #3d6b4f;
+}
+
+.scroll-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* hide scrollbar (optional but nice) */
+.scroll-track::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-track img {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    scroll-snap-align: start;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.scroll-track img:hover {
+    transform: scale(1.05);
+}
