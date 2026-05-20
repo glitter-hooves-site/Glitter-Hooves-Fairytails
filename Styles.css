@@ -248,16 +248,25 @@ button:hover {
 }
 
 .scroll-track img {
-    flex: 0 0 auto;
-    width: 300px;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 16px;
-    scroll-snap-align: start;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
+  flex: 0 0 auto;
+  width: 220px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 1rem;
+  scroll-snap-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
 .scroll-track img:hover {
     transform: scale(1.05);
+}
+.scroll-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  align-items: center;
 }
