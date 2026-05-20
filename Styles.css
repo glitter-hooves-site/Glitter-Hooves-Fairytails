@@ -240,6 +240,7 @@ button:hover {
   padding: 1rem 0;
   scroll-snap-type: x mandatory;
   align-items: center;
+  scroll-behavior: smooth;
 }
 
 .photo-scroll .scroll-track img {
