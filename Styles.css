@@ -133,9 +133,10 @@ h2 {
 .card img {
     width: 100%;
     height: 250px;
-    object-fit: cover;
-    object-position: center 30%;
+    object-fit: contain;
+    object-position: center;
     border-radius: 10px;
+    background: #f4f9f4;
 }
 
 /* IMAGES */
