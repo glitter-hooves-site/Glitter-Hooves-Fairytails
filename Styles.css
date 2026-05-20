@@ -233,7 +233,7 @@ button:hover {
   color: #3d6b4f;
 }
 
-.photo-scroll .scroll-track {
+.photo-scroll .scroll-track
   display: flex;
   gap: 1rem;
   overflow-x: auto;
@@ -257,10 +257,13 @@ button:hover {
 .photo-scroll .scroll-track img:hover {
   transform: scale(1.05);
 }
-}
+
+/* MOBILE */
 @media (max-width: 600px) {
-  .scroll-track img {
-    width: 180px;
-    height: 130px;
+  .photo-scroll .scroll-track img {
+    width: 140px;
+    height: 100px;
+  }
+}
   }
 }
