@@ -233,19 +233,24 @@ button:hover {
   color: #3d6b4f;
 }
 
-.scroll-track {
+.photo-scroll .scroll-track {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
-  padding: 1rem;
-
+  padding: 1rem 0;
   scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  align-items: flex-start; /* IMPORTANT FIX */
-  max-width: 100%;
+  align-items: center;
 }
 
+.photo-scroll .scroll-track img {
+  flex: 0 0 auto;
+  width: 180px;      /* smaller = fixed control */
+  height: 130px;     /* forces consistency */
+  object-fit: cover; /* prevents stretching */
+  border-radius: 1rem;
+  scroll-snap-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 /* each image is LOCKED size */
 .scroll-track img {
   flex: 0 0 auto;
