@@ -132,7 +132,8 @@ h2 {
 
 .card img {
     width: 100%;
-    height: auto;
+    height: 160px;
+    object-fit: cover;
     border-radius: 10px;
     display: block;
 }
