@@ -233,7 +233,7 @@ button:hover {
   color: #3d6b4f;
 }
 
-.photo-scroll .scroll-track
+.photo-scroll .scroll-track {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
@@ -265,5 +265,4 @@ button:hover {
     height: 100px;
   }
 }
-  }
 }
