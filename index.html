@@ -184,6 +184,14 @@
   flex-shrink: 0;
   display: block;
 }
+  .scroll-track img {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.scroll-track img:hover {
+  transform: scale(1.06);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
   
   @media (max-width: 900px) {
     .hero-content, .about-grid { grid-template-columns: 1fr; }
