@@ -246,8 +246,8 @@ button:hover {
 
 .photo-scroll .scroll-track img {
   flex: 0 0 auto;
-  width: 160px;
-  height: 110px;
+  width: 90px;
+  height: 70px;
   object-fit: cover;
   border-radius: 1rem;
   scroll-snap-align: center;
@@ -263,7 +263,7 @@ button:hover {
 /* MOBILE */
 @media (max-width: 600px) {
   .photo-scroll .scroll-track img {
-    width: 140px;
-    height: 100px;
+    width: 80px;
+    height: 60px;
   }
 }
