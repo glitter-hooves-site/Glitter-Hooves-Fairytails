@@ -46,6 +46,13 @@ nav {
     top: 0;
     z-index: 100;
 }
+nav {
+  padding: 0 1rem;
+}
+
+.nav-logo {
+  font-size: 1rem;
+}
 
 nav a {
     color: white;
