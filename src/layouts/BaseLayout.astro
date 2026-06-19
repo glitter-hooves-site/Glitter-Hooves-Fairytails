@@ -7,13 +7,31 @@ interface Props {
   title: string;
   description?: string;
   pathname?: string;
+  ogImage?: string;
 }
 
 const {
   title,
   description = 'A peaceful farm offering trauma-informed, neurodivergent-friendly experiences with gentle animals and nature.',
   pathname = Astro.url.pathname,
+  ogImage = '/images/about-us.jpeg',
 } = Astro.props;
+
+const canonical = new URL(pathname, Astro.site).toString();
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
+const isHome = pathname === '/';
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Glitter Hooves & Fairytails',
+  description: 'A trauma-informed farm offering neurodivergent-friendly experiences with gentle animals for children, families, and foster care.',
+  url: 'https://glitterhoovesfairytails.org',
+  image: ogImageUrl,
+  sameAs: [
+    'https://glitterhoovesandfairytails.substack.com/',
+  ],
+};
 
 const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
@@ -34,7 +52,23 @@ const navLinks = [
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{title}</title>
 <meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Glitter Hooves & Fairytails" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImageUrl} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageUrl} />
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+{isHome && <script type="application/ld+json" set:html={JSON.stringify(localBusinessJsonLd)} />}
 </head>
 <body>
 

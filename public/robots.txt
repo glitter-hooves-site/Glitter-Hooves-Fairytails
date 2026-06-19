@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://glitterhoovesfairytails.org/sitemap-index.xml
