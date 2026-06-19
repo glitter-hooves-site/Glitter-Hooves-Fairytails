@@ -30,6 +30,30 @@ nav.site-nav {
 .nav-cta { background: var(--sage); color: white !important; padding: 0.5rem 1.2rem; border-radius: 50px; transition: background 0.2s !important; }
 .nav-cta:hover { background: var(--sage-dark) !important; }
 
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0.5rem;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.nav-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--sage-dark);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 main { padding-top: 68px; }
 
 .hero {
@@ -221,7 +245,33 @@ footer.site-footer .footer-newsletter button {
   .experience-grid { grid-template-columns: 1fr 1fr; }
   .events-layout { grid-template-columns: 1fr; }
   .booking-card { position: static; }
-  .nav-links { display: none; }
+
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: rgba(253,246,236,0.98);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+    box-shadow: 0 8px 20px rgba(107,66,38,0.08);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    display: block;
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+  }
+  .nav-links .nav-cta {
+    margin: 0.5rem 2rem;
+    text-align: center;
+  }
 }
 @media (max-width: 600px) {
   .experience-grid, .about-features { grid-template-columns: 1fr; }
