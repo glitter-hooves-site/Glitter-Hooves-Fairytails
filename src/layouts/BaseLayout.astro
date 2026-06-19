@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import Newsletter from '../components/Newsletter.astro';
+import GlitterCanvas from '../components/GlitterCanvas.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pathname?: string;
+}
+
+const {
+  title,
+  description = 'A peaceful farm offering trauma-informed, neurodivergent-friendly experiences with gentle animals and nature.',
+  pathname = Astro.url.pathname,
+} = Astro.props;
+
+const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+
+const navLinks = [
+  { href: '/about/', label: 'About' },
+  { href: '/animals/', label: 'Our Animals' },
+  { href: '/experiences/', label: 'Experiences' },
+  { href: '/events/', label: 'Events' },
+  { href: 'https://glitterhoovesandfairytails.substack.com/', label: 'Substack', external: true },
+  { href: '/shop/', label: 'Shop' },
+  { href: '/donate/', label: 'Donate' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-logo">🐐 Glitter Hooves & Fairytails</a>
+  <ul class="nav-links">
+    {navLinks.map(link => (
+      <li>
+        <a
+          href={link.href}
+          class={!link.external && isActive(link.href) ? 'active' : ''}
+          {...link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+        >{link.label}</a>
+      </li>
+    ))}
+    <li><a href="/events/" class="nav-cta">Book a Visit</a></li>
+  </ul>
+</nav>
+
+<main>
+  <slot />
+</main>
+
+<footer class="site-footer">
+  <div class="footer-logo">🐐 Glitter Hooves & Fairytails</div>
+  <p>A peaceful space filled with gentle animals and healing moments.</p>
+  <Newsletter />
+  <p style="margin-top:1.5rem;">© 2026 Glitter Hooves & Fairytails. All rights reserved.</p>
+</footer>
+
+<GlitterCanvas />
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

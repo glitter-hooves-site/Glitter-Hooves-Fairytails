@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EventsBooking from '../components/EventsBooking.astro';
+---
+<BaseLayout title="Events & Bookings — Glitter Hooves & Fairytails" description="Upcoming farm events, seasonal experiences, and how to book a visit.">
+
+<section>
+  <div class="container">
+    <div class="section-header fade-up">
+      <span class="section-label">Upcoming Events</span>
+      <h2 class="section-title">Join us on the farm</h2>
+      <p class="section-subtitle">Special events, seasonal experiences, and open farm days — there's always something happening at Glitter Hooves.</p>
+    </div>
+    <EventsBooking />
+  </div>
+</section>
+
+</BaseLayout>
