@@ -1,0 +1,115 @@
+---
+import { EVENTS } from '../data/events.ts';
+---
+<div class="events-layout">
+  <div class="event-list fade-up">
+    {EVENTS.map(ev => {
+      const free = ev.price === 'Free';
+      return (
+        <div class="event-item">
+          <div class="event-date-box">
+            <div class="month">{ev.month}</div>
+            <div class="day">{ev.day}</div>
+          </div>
+          <div class="event-info">
+            <h4>{ev.title}</h4>
+            <p>🕐 {ev.time} &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p>
+          </div>
+          <div class="event-meta">
+            <span class={`event-badge ${free ? 'badge-free' : 'badge-paid'}`}>{ev.price}</span>
+            <span class="event-seats">{ev.seats}</span>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="booking-card fade-up">
+    <h3>Reserve Your Spot</h3>
+    <p>Fill out the form and we'll confirm your reservation within 24 hours.</p>
+    <form id="bookingForm" action="https://formspree.io/f/maqavneq" method="POST" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="fname" name="first_name" placeholder="Jane" />
+          <span class="field-error" id="fname-err">Please enter your first name.</span>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="lname" name="last_name" placeholder="Smith" />
+          <span class="field-error" id="lname-err">Please enter your last name.</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" name="email" placeholder="you@email.com" />
+        <span class="field-error" id="email-err">Please enter a valid email address.</span>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+        <span class="field-error" id="phone-err">Please enter a valid phone number.</span>
+      </div>
+      <div class="form-group">
+        <label>Select Event</label>
+        <select id="event-select" name="event">
+          <option value="">Choose an event…</option>
+          {EVENTS.map((ev, i) => (
+            <option value={i}>{ev.title} — {ev.month} {ev.day} ({ev.price})</option>
+          ))}
+          <option value="private">Private / Custom Visit</option>
+        </select>
+        <span class="field-error" id="event-err">Please select an event.</span>
+      </div>
+      <div class="form-group">
+        <label>Number of Guests</label>
+        <select id="guests" name="guests">
+          <option value="">Select…</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5+">5+</option>
+        </select>
+        <span class="field-error" id="guests-err">Please select the number of guests.</span>
+      </div>
+      <div class="form-group">
+        <label>Message (optional)</label>
+        <textarea id="message" name="message" placeholder="Any questions or special needs…"></textarea>
+      </div>
+      <button type="button" class="btn-book" id="bookingSubmit">Request Reservation ✨</button>
+      <p class="booking-note">We'll follow up by email to confirm and arrange payment for paid events.</p>
+    </form>
+    <div class="success-message" id="successMsg">
+      🌿 Thank you! We've received your request and will be in touch within 24 hours.
+    </div>
+  </div>
+</div>
+
+<script>
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
+
+  document.getElementById('bookingSubmit')?.addEventListener('click', () => {
+    let valid = true;
+    const fname = $('fname') as HTMLInputElement;
+    const lname = $('lname') as HTMLInputElement;
+    const email = $('email') as HTMLInputElement;
+    const phone = $('phone') as HTMLInputElement;
+    const eventSel = $('event-select') as HTMLSelectElement;
+    const guests = $('guests') as HTMLSelectElement;
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    const phoneVal = phone.value.trim();
+    const phoneOk = !phoneVal || /^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
+
+    if (!fname.value.trim()) valid = false;
+    if (!lname.value.trim()) valid = false;
+    if (!emailOk) valid = false;
+    if (!phoneOk) valid = false;
+    if (!eventSel.value) valid = false;
+    if (!guests.value) valid = false;
+
+    if (!valid) return;
+    (document.getElementById('bookingForm') as HTMLFormElement).submit();
+  });
+</script>
