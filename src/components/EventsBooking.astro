@@ -9,7 +9,7 @@ import { EVENTS } from '../data/events.ts';
         <div class="event-item">
           <div class="event-date-box">
             <div class="month">{ev.month}</div>
-            <div class="day">{ev.day}</div>
+            {ev.day && <div class="day">{ev.day}</div>}
           </div>
           <div class="event-info">
             <h4>{ev.title}</h4>
