@@ -75,7 +75,10 @@ const navLinks = [
 
 <nav class="site-nav">
   <a href="/" class="nav-logo">🐐 Glitter Hooves & Fairytails</a>
-  <ul class="nav-links">
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     {navLinks.map(link => (
       <li>
         <a
@@ -107,6 +110,19 @@ const navLinks = [
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const toggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    const open = navLinks?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+    toggle.classList.toggle('open', !!open);
+  });
+  navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    toggle?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }));
 </script>
 
 </body>
