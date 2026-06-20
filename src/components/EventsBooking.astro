@@ -87,29 +87,59 @@ import { EVENTS } from '../data/events.ts';
 </div>
 
 <script>
-  const $ = (id: string) => document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
+  type Field = HTMLInputElement | HTMLSelectElement;
+  const $ = (id: string) => document.getElementById(id) as Field | null;
 
-  document.getElementById('bookingSubmit')?.addEventListener('click', () => {
-    let valid = true;
-    const fname = $('fname') as HTMLInputElement;
-    const lname = $('lname') as HTMLInputElement;
-    const email = $('email') as HTMLInputElement;
-    const phone = $('phone') as HTMLInputElement;
-    const eventSel = $('event-select') as HTMLSelectElement;
-    const guests = $('guests') as HTMLSelectElement;
+  const setError = (field: Field | null, errId: string, bad: boolean) => {
+    if (!field) return;
+    field.classList.toggle('invalid', bad);
+    document.getElementById(errId)?.classList.toggle('visible', bad);
+  };
 
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+  document.getElementById('bookingSubmit')?.addEventListener('click', async () => {
+    const fname = $('fname')!;
+    const lname = $('lname')!;
+    const email = $('email')!;
+    const phone = $('phone')!;
+    const eventSel = $('event-select')!;
+    const guests = $('guests')!;
+
+    const fnameBad = !fname.value.trim();
+    const lnameBad = !lname.value.trim();
+    const emailBad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
     const phoneVal = phone.value.trim();
-    const phoneOk = !phoneVal || /^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
+    const phoneBad = !!phoneVal && !/^[\d\s\-\(\)\+]{7,15}$/.test(phoneVal);
+    const eventBad = !eventSel.value;
+    const guestsBad = !guests.value;
 
-    if (!fname.value.trim()) valid = false;
-    if (!lname.value.trim()) valid = false;
-    if (!emailOk) valid = false;
-    if (!phoneOk) valid = false;
-    if (!eventSel.value) valid = false;
-    if (!guests.value) valid = false;
+    setError(fname, 'fname-err', fnameBad);
+    setError(lname, 'lname-err', lnameBad);
+    setError(email, 'email-err', emailBad);
+    setError(phone, 'phone-err', phoneBad);
+    setError(eventSel, 'event-err', eventBad);
+    setError(guests, 'guests-err', guestsBad);
 
-    if (!valid) return;
-    (document.getElementById('bookingForm') as HTMLFormElement).submit();
+    if (fnameBad || lnameBad || emailBad || phoneBad || eventBad || guestsBad) return;
+
+    const form = document.getElementById('bookingForm') as HTMLFormElement;
+    const submitBtn = document.getElementById('bookingSubmit') as HTMLButtonElement;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error(`Form submission failed: ${res.status}`);
+      form.style.display = 'none';
+      document.getElementById('successMsg')?.classList.add('show');
+    } catch (err) {
+      console.error(err);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Request Reservation ✨';
+      alert("Sorry — something went wrong sending your request. Please try again, or email us directly.");
+    }
   });
 </script>
