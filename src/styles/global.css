@@ -69,6 +69,8 @@ main { padding-top: 68px; }
   pointer-events: none;
 }
 .hero-content { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.hero-centered .hero-content { grid-template-columns: 1fr; max-width: 720px; text-align: center; }
+.hero-centered .hero-buttons { justify-content: center; }
 .hero-badge { display: inline-block; background: var(--blush-light); color: var(--forest); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
 .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.15; color: var(--forest); margin-bottom: 1.2rem; }
 .hero h1 em { color: var(--sage-dark); font-style: italic; }
