@@ -148,6 +148,22 @@ section { padding: 5rem 2rem; }
 .badge-free { background: var(--sage-light); color: var(--sage-dark); }
 .badge-paid { background: var(--blush-light); color: var(--brown); }
 .event-seats { font-size: 0.8rem; color: var(--text-muted); }
+.btn-rsvp {
+  display: block;
+  text-align: center;
+  background: var(--sage);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
+  margin-top: 0.25rem;
+  transition: background 0.2s;
+}
+.btn-rsvp:hover { background: var(--sage-dark); }
 
 .booking-card { background: var(--brown); color: white; border-radius: 1.5rem; padding: 2rem; position: sticky; top: 90px; }
 .booking-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
