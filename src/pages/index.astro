@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { FARM_PHOTOS } from '../data/photos.ts';
 ---
 <BaseLayout title="Glitter Hooves & Fairytails" description="A peaceful farm where dreams grow and magic roams free.">
 
@@ -16,8 +17,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <div class="hero-image-stack">
-      <img src="/images/petunia.jpg" alt="Petunia the goat" class="hero-img-main" />
-      <img src="/images/piper.jpg" alt="Piper the goat" class="hero-img-accent" />
+      <img src="/images/animals/petunia/petunia-portrait.jpg" alt="Petunia the goat" class="hero-img-main" />
+      <img src="/images/animals/piper/piper-portrait.jpg" alt="Piper the goat" class="hero-img-accent" />
       <div class="hero-tag">
         <div class="hero-tag-dot"></div>
         Open for visits
@@ -29,8 +30,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <section class="photo-scroll">
   <h2>Life on the Farm</h2>
   <div class="scroll-track">
-    <img src="/images/petunia and piper.jpeg" alt="Butt heads at play" />
-    <img src="/images/piper and emma.jpeg" alt="Happiness is a small goat" />
+    {FARM_PHOTOS.map(photo => (
+      <img src={photo.src} alt={photo.alt} />
+    ))}
   </div>
 </section>
 

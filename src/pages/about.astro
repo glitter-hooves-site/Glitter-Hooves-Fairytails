@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { ABOUT_PHOTOS } from '../data/photos.ts';
+
+const [featured, ...rest] = ABOUT_PHOTOS;
 ---
 <BaseLayout title="About — Glitter Hooves & Fairytails" description="The story behind a trauma-informed farm built on kindness, connection, and a little magic.">
 
@@ -25,7 +28,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <div class="fade-up about-image-wrap">
-        <img src="/images/about-us.jpeg" alt="Glitter Hooves & Fairytails family" class="about-image" />
+        {featured && <img src={featured.src} alt={featured.alt} class="about-image" />}
+        {rest.length > 0 && (
+          <div class="about-collage">
+            {rest.map(photo => (
+              <img src={photo.src} alt={photo.alt} />
+            ))}
+          </div>
+        )}
         <div class="about-caption">Built with love, kindness, and a little farm magic ✨</div>
       </div>
     </div>
