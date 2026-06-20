@@ -21,6 +21,8 @@ export interface Photo {
 export const FARM_PHOTOS: Photo[] = [
   { src: '/images/farm/petunia-and-piper.jpeg', alt: 'Petunia and Piper butting heads at play' },
   { src: '/images/farm/piper-and-emma.jpeg',    alt: 'Emma snuggling Piper the goat' },
+  { src: '/images/farm/3.jpeg',                 alt: 'Life on the farm' },
+  { src: '/images/farm/4.jpeg',                 alt: 'Life on the farm' },
 ];
 
 // Photos on the About page, rendered as a collage.
