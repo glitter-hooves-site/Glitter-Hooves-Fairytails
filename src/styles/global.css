@@ -69,6 +69,8 @@ main { padding-top: 68px; }
   pointer-events: none;
 }
 .hero-content { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.hero-centered .hero-content { grid-template-columns: 1fr; max-width: 720px; text-align: center; }
+.hero-centered .hero-buttons { justify-content: center; }
 .hero-badge { display: inline-block; background: var(--blush-light); color: var(--forest); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
 .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.15; color: var(--forest); margin-bottom: 1.2rem; }
 .hero h1 em { color: var(--sage-dark); font-style: italic; }
@@ -96,8 +98,24 @@ section { padding: 5rem 2rem; }
 .about-text p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; }
 .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
 .feature-pill { background: var(--cream); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem 1rem; font-size: 0.875rem; color: var(--text); display: flex; align-items: center; gap: 0.6rem; }
-.about-image { width: 100%; height: 480px; object-fit: cover; border-radius: 2rem; box-shadow: 0 20px 60px rgba(107,66,38,0.15); }
+.about-image { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2rem; box-shadow: 0 20px 60px rgba(63,74,58,0.15); }
 .about-image-wrap { text-align: center; }
+.about-collage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+.about-collage img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 0.85rem;
+  box-shadow: 0 6px 20px rgba(63,74,58,0.12);
+}
+@media (max-width: 600px) {
+  .about-collage { grid-template-columns: repeat(2, 1fr); }
+}
 .about-caption {
   margin-top: 1rem;
   background: var(--cream);
