@@ -17,10 +17,10 @@ import { EVENTS } from '../data/events.ts';
           </div>
           <div class="event-meta">
             <span class={`event-badge ${free ? 'badge-free' : 'badge-paid'}`}>{ev.price}</span>
-            <span class="event-seats">{ev.seats}</span>
             {ev.rsvpUrl && (
               <a class="btn-rsvp" href={ev.rsvpUrl} target="_blank" rel="noopener noreferrer">RSVP</a>
             )}
+            <span class="event-seats">{ev.seats}</span>
           </div>
         </div>
       );

@@ -151,7 +151,7 @@ section { padding: 5rem 2rem; }
 .btn-rsvp {
   display: block;
   text-align: center;
-  background: var(--sage);
+  background: var(--amber);
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
@@ -163,7 +163,7 @@ section { padding: 5rem 2rem; }
   margin-top: 0.25rem;
   transition: background 0.2s;
 }
-.btn-rsvp:hover { background: var(--sage-dark); }
+.btn-rsvp:hover { background: var(--brown); }
 
 .booking-card { background: var(--brown); color: white; border-radius: 1.5rem; padding: 2rem; position: sticky; top: 90px; }
 .booking-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.5rem; }
