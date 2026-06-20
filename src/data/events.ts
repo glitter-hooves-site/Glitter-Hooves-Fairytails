@@ -14,5 +14,5 @@ export interface Event {
 export const EVENTS: Event[] = [
   { month: 'June',            day: '27',  title: 'Founders Fairy & Folklore Farm Day', time: '10am-2pm',       price: '$25/person, or family 4 pack for $75',                  seats: '25 spots left' },
   { month: 'June',            day: '30',  title: 'Gentle Hooves 4 Week Pilot Programs', time: 'Varies by date', price: '$99',                                                   seats: 'ALMOST FULL!' },
-  { month: 'Weekly',          day: '',       title: 'Farm Connection Visits',           time: 'Varies',         price: '$45/person, $10/additional child, $5 additional adult', seats: 'Private Experience' },
+  { month: 'Weekly',          day: '',       title: 'Farm Connection Visits',           time: 'Varies',         price: '$45 includes 1 adult & 1 child · Additional: $30/child, $10/adult', seats: 'Private Experience' },
 ];
