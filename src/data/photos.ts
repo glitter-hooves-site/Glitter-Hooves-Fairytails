@@ -24,7 +24,11 @@ export const FARM_PHOTOS: Photo[] = [
 ];
 
 // Photos on the About page, rendered as a collage.
-// First photo is featured larger; the rest fill a grid.
+// First photo is featured larger; the rest fill a grid below.
+// TODO: replace placeholder alt text with descriptions of what's in each photo.
 export const ABOUT_PHOTOS: Photo[] = [
-  { src: '/images/about/about-us.jpeg', alt: 'Glitter Hooves & Fairytails family' },
+  { src: '/images/about/1.jpeg', alt: 'Glitter Hooves & Fairytails moment' },
+  { src: '/images/about/2.jpeg', alt: 'Glitter Hooves & Fairytails moment' },
+  { src: '/images/about/3.jpeg', alt: 'Glitter Hooves & Fairytails moment' },
+  { src: '/images/about/4.jpeg', alt: 'Glitter Hooves & Fairytails moment' },
 ];
