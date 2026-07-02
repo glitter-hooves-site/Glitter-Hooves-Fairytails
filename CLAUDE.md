@@ -67,7 +67,7 @@ astro.config.mjs                  site URL, sitemap integration
 ## How to do common edits
 
 ### Add an event
-Edit `src/data/events.ts`. Append to `EVENTS`. Set `rsvpUrl` for external Eventbrite/registration links — the RSVP button renders automatically when present. Keep events in date order.
+Edit `src/data/events.ts`. Append to `RAW_EVENTS` — order doesn't matter, the module sorts by `date` and filters out past events automatically. Set `date: new Date('YYYY-MM-DD')` for dated events; use `displayMonth`/`displayDay` overrides for recurring or TBA experiences. Set `rsvpUrl` for external registration links — the RSVP button renders automatically when present. Event schema JSON-LD is emitted for any event with a real `date`.
 
 ### Add a photo
 1. Drop the file in the matching subfolder under `public/images/`.
