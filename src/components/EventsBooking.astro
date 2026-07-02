@@ -1,15 +1,45 @@
 ---
-import { EVENTS } from '../data/events.ts';
+import { EVENTS, eventMonthLabel, eventDayLabel } from '../data/events.ts';
+
+// Event schema JSON-LD — only for events with a real date, so search
+// engines can surface them as rich results.
+const eventJsonLd = EVENTS
+  .filter(ev => ev.date)
+  .map(ev => ({
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: ev.title,
+    startDate: ev.date!.toISOString().slice(0, 10),
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'Glitter Hooves & Fairytails Farm',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Kittrell',
+        addressRegion: 'NC',
+        postalCode: '27544',
+        addressCountry: 'US',
+      },
+    },
+    ...(ev.rsvpUrl ? { url: ev.rsvpUrl } : {}),
+  }));
 ---
+{eventJsonLd.map(ld => (
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+))}
 <div class="events-layout">
   <div class="event-list fade-up">
     {EVENTS.map(ev => {
       const free = ev.price === 'Free';
+      const month = eventMonthLabel(ev);
+      const day = eventDayLabel(ev);
       return (
         <div class="event-item">
           <div class="event-date-box">
-            <div class="month">{ev.month}</div>
-            {ev.day && <div class="day">{ev.day}</div>}
+            <div class="month">{month}</div>
+            {day && <div class="day">{day}</div>}
           </div>
           <div class="event-info">
             <h4>{ev.title}</h4>
