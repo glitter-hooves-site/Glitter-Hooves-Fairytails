@@ -1,8 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { FARM_PHOTOS } from '../data/photos.ts';
+import { EVENTS, eventLongDate } from '../data/events.ts';
+
+// EVENTS is already sorted and filtered to upcoming; the first entry with
+// a real date is the next thing happening on the farm.
+const nextEvent = EVENTS.find(ev => ev.date);
 ---
-<BaseLayout title="Glitter Hooves & Fairytails" description="A peaceful farm where dreams grow and magic roams free.">
+<BaseLayout
+  title="Glitter Hooves & Fairytails — Farm Experiences in Kittrell, NC"
+  description="A small farm in Kittrell, North Carolina offering trauma-informed, sensory-friendly experiences with gentle goats for children, families, and foster families."
+>
 
 <section class="hero hero-centered">
   <div class="hero-content">
@@ -19,12 +27,113 @@ import { FARM_PHOTOS } from '../data/photos.ts';
   </div>
 </section>
 
+<section class="home-intro">
+  <div class="container">
+    <div class="section-header fade-up home-intro-text">
+      <span class="section-label">Kittrell, North Carolina</span>
+      <h2 class="section-title">A gentle place for children to slow down</h2>
+      <p>
+        Glitter Hooves &amp; Fairytails is a small farm built around a simple idea: children grow
+        best when they feel safe. Our programs are trauma-informed and sensory-conscious, created
+        for families, homeschoolers, neurodivergent children, and children impacted by foster
+        care, kinship care, and adoption.
+      </p>
+      <p>
+        We are not therapy, and we don't replace clinical services. What we offer is unhurried
+        time with gentle animals, room to move and explore, and quiet moments that help children
+        build confidence and connection at their own pace. <a href="/about/">Read our story</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="home-teasers">
+  <div class="container">
+    <div class="teaser-grid">
+
+      <a href="/experiences/" class="teaser-card fade-up">
+        <div class="teaser-icon">🌿</div>
+        <h3>Farm experiences</h3>
+        <p>
+          Four-week mindful farm programs for ages 5–9, sensory-friendly mini sessions for ages
+          2–4, and private Farm Connection Visits by appointment. Every program is built around
+          connection, calm, and confidence.
+        </p>
+        <span class="teaser-link">See all experiences →</span>
+      </a>
+
+      <a href="/animals/" class="teaser-card fade-up">
+        <div class="teaser-icon">🐐</div>
+        <h3>Meet the animals</h3>
+        <p>
+          Piper is playful and curious — she'll be the first to greet you at the gate. Petunia is
+          calm and affectionate, perfect for soothing, unhurried visits. Every animal here has a
+          personality all their own.
+        </p>
+        <span class="teaser-link">Meet the crew →</span>
+      </a>
+
+      <a href="/events/" class="teaser-card fade-up">
+        <div class="teaser-icon">📅</div>
+        <h3>Upcoming events</h3>
+        {nextEvent ? (
+          <p>
+            Next up: <strong>{nextEvent.title}</strong> on {eventLongDate(nextEvent)}. We host
+            seasonal farm days, folklore nights, and open visits throughout the year.
+          </p>
+        ) : (
+          <p>
+            We host seasonal farm days, folklore nights, and private farm visits throughout the
+            year. Check the calendar for what's coming up next.
+          </p>
+        )}
+        <span class="teaser-link">See the calendar →</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <section class="photo-scroll">
   <h2>Life on the Farm</h2>
   <div class="scroll-track">
     {FARM_PHOTOS.map(photo => (
-      <img src={photo.src} alt={photo.alt} />
+      <img src={photo.src} alt={photo.alt} loading="lazy" />
     ))}
+  </div>
+</section>
+
+<section class="home-support">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;">
+      <span class="section-label">Ways to Help</span>
+      <h2 class="section-title">Support the farm</h2>
+    </div>
+    <div class="support-grid">
+
+      <div class="cta-card cta-card-grid fade-up">
+        <div class="cta-emoji">💚</div>
+        <h3>Foster Hearts Fund</h3>
+        <p>
+          Many foster families already face significant challenges and expenses. The Foster
+          Hearts Fund covers program costs, supplies, and activities so foster children can join
+          Gentle Hooves: Fostering Hope regardless of financial circumstances.
+        </p>
+        <a href="/donate/" class="btn-primary">Learn how to help</a>
+      </div>
+
+      <div class="cta-card cta-card-grid alt fade-up">
+        <div class="cta-emoji">🛍️</div>
+        <h3>Hooves &amp; Handmade</h3>
+        <p>
+          Our farm shop features handmade gifts, fairy treasures, and sensory-friendly
+          activities. Every purchase helps support our animals and the programs we run for
+          children and families.
+        </p>
+        <a href="/shop/" class="btn-primary">Visit the shop</a>
+      </div>
+
+    </div>
   </div>
 </section>
 
