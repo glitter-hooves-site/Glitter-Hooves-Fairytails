@@ -234,6 +234,74 @@ section { padding: 5rem 2rem; }
 .cta-emoji { font-size: 3rem; margin-bottom: 1rem; }
 .cta-card p { color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
 
+.home-intro { background: var(--warm-white); }
+.home-intro-text { margin-bottom: 0; max-width: 720px; }
+.home-intro-text p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+}
+.home-intro-text p:last-child { margin-bottom: 0; }
+.home-intro-text a { color: var(--sage-dark); font-weight: 700; text-decoration: underline; }
+
+.home-teasers { background: var(--cream); }
+.teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.teaser-card {
+  display: block;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.teaser-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(63,74,58,0.1); }
+.teaser-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--blush-light);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.teaser-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--forest);
+  margin-bottom: 0.6rem;
+}
+.teaser-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; font-weight: 300; }
+.teaser-link {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+}
+.teaser-card:hover .teaser-link { color: var(--ink); }
+
+.home-support { background: var(--warm-white); }
+.support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.cta-card-grid { max-width: none; margin: 0; }
+.cta-card-grid h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--forest);
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .teaser-grid, .support-grid { grid-template-columns: 1fr; }
+}
+
 footer.site-footer { background: var(--surface-deep); color: var(--text); padding: 3rem 2rem; text-align: center; }
 footer.site-footer .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 0.5rem; }
 footer.site-footer p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.8; }
