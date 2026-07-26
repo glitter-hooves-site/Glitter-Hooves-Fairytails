@@ -23,18 +23,43 @@ export interface Event {
   rsvpUrl?: string;
 }
 
+/** The farm is in Kittrell, NC. Event dates always mean this timezone, never
+ *  the timezone of whatever machine happens to run the build. */
+const FARM_TZ = 'America/New_York';
+
 /**
- * Parse a 'YYYY-MM-DD' string as LOCAL midnight.
+ * Build a Date standing for a calendar day, from its 'YYYY-MM-DD' parts.
  *
  * Do not use `new Date('2026-06-27')` for event dates. The ES spec parses a
- * date-only ISO string as UTC midnight, but everything else here (and
- * `new Date()` for "today") works in local time. In any timezone west of UTC
- * that mismatch shifts the event back a day — an event happening today reads
- * as yesterday and gets filtered out of the list.
+ * date-only ISO string as UTC midnight, so in any timezone west of UTC it
+ * renders as the previous day. Constructing from parts keeps the calendar day
+ * intact wherever the code runs.
+ *
+ * The resulting Date is machine-local midnight, which is deliberate: it makes
+ * the display helpers below (`getMonth`, `getDate`, `toLocaleDateString`)
+ * report the intended calendar day on any machine. Only "is this event past?"
+ * needs true timezone awareness, and that is `todayAtFarm()`'s job.
  */
 function localDate(iso: string): Date {
   const [year, month, day] = iso.split('-').map(Number);
   return new Date(year, month - 1, day);
+}
+
+/**
+ * Today's calendar date at the farm, as 'YYYY-MM-DD'.
+ *
+ * The deploy builds on GitHub Actions in UTC, so a plain `new Date()` rolls
+ * over to tomorrow at 8pm ET and would retire an event while it is still
+ * happening. Asking Intl for the date in FARM_TZ pins it to the farm's own
+ * day and handles DST for free. The 'en-CA' locale formats as YYYY-MM-DD.
+ */
+function todayAtFarm(): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: FARM_TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date());
 }
 
 const RAW_EVENTS: Event[] = [
@@ -47,12 +72,6 @@ const RAW_EVENTS: Event[] = [
 // -------------------- helpers --------------------
 
 const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-function startOfDay(d: Date): Date {
-  const copy = new Date(d);
-  copy.setHours(0, 0, 0, 0);
-  return copy;
-}
 
 export function eventMonthLabel(ev: Event): string {
   if (ev.displayMonth !== undefined) return ev.displayMonth;
@@ -73,9 +92,11 @@ export function eventLongDate(ev: Event): string {
 }
 
 /**
- * Format as 'YYYY-MM-DD' from LOCAL date parts, for schema.org startDate.
- * Not `toISOString()` — that converts to UTC first and can land on the
- * wrong day, the same trap `localDate` above exists to avoid.
+ * An event's calendar day as 'YYYY-MM-DD', read from local date parts. Used
+ * both for schema.org `startDate` and for the past-event comparison below.
+ *
+ * Not `toISOString()` — that converts to UTC first and can land on the wrong
+ * day, the mirror image of the trap `localDate` above exists to avoid.
  */
 export function toISODate(d: Date): string {
   const pad = (n: number) => String(n).padStart(2, '0');
@@ -85,12 +106,14 @@ export function toISODate(d: Date): string {
 // -------------------- filtering + sorting --------------------
 
 // Events with a date sort chronologically; recurring/undated events go last.
-// An event stays listed through the whole of its own day and drops off the
-// following day (the comparison is `>=` against local midnight today).
+// An event stays listed through the whole of its own day at the farm and drops
+// off the following day. Both sides of the comparison are 'YYYY-MM-DD' strings,
+// which sort lexicographically the same way they sort chronologically, so this
+// is a plain calendar-day comparison with no clock or timezone left in it.
 function sortAndFilter(events: Event[]): Event[] {
-  const today = startOfDay(new Date());
+  const today = todayAtFarm();
   return events
-    .filter(ev => !ev.date || startOfDay(ev.date) >= today)
+    .filter(ev => !ev.date || toISODate(ev.date) >= today)
     .sort((a, b) => {
       if (a.date && b.date) return a.date.getTime() - b.date.getTime();
       if (a.date) return -1;
