@@ -98,7 +98,10 @@ section { padding: 5rem 2rem; }
 .about-text p { font-size: 1.05rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 1.25rem; font-weight: 300; }
 .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
 .feature-pill { background: var(--cream); border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.85rem 1rem; font-size: 0.875rem; color: var(--text); display: flex; align-items: center; gap: 0.6rem; }
-.about-image { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2rem; box-shadow: 0 20px 60px rgba(63,74,58,0.15); }
+/* height: auto is required, not optional. <Image> stamps width/height
+   attributes for CLS; without height:auto the attribute supplies the used
+   height and aspect-ratio is ignored, rendering these at full source height. */
+.about-image { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 2rem; box-shadow: 0 20px 60px rgba(63,74,58,0.15); }
 .about-image-wrap { text-align: center; }
 .about-collage {
   display: grid;
@@ -108,6 +111,7 @@ section { padding: 5rem 2rem; }
 }
 .about-collage img {
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 0.85rem;
@@ -140,7 +144,7 @@ section { padding: 5rem 2rem; }
   background: #fff;
 }
 .animal-card-body { padding: 1.75rem; }
-.animal-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 0.5rem; }
+.animal-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--forest); margin-bottom: 0.5rem; }
 .animal-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
 .animal-tag { display: inline-block; background: var(--sage-light); color: var(--sage-dark); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 50px; margin-bottom: 0.75rem; }
 
@@ -148,7 +152,16 @@ section { padding: 5rem 2rem; }
 .exp-card { background: var(--cream); border: 1px solid var(--border); border-radius: 1.5rem; padding: 2rem; transition: transform 0.2s, box-shadow 0.2s; }
 .exp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(107,66,38,0.1); }
 .exp-icon { width: 52px; height: 52px; background: var(--blush-light); border-radius: 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.25rem; }
-.exp-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--forest); margin-bottom: 0.6rem; }
+.exp-card h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--forest); margin-bottom: 0.4rem; }
+/* Was a second <h3> per card, which read as a heading it isn't. */
+.exp-card p.exp-subtitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sage-dark);
+  margin-bottom: 1rem;
+}
 .exp-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; font-weight: 300; margin-bottom: 0.5rem; }
 .exp-card .price { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; color: var(--sage-dark); }
 .exp-card .price small { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; }
@@ -160,7 +173,7 @@ section { padding: 5rem 2rem; }
 .event-date-box { background: var(--sage); color: white; border-radius: 0.75rem; padding: 0.6rem; text-align: center; min-height: 72px; display: flex; flex-direction: column; justify-content: center; gap: 0.25rem; }
 .event-date-box .month { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .event-date-box .day { font-size: 1.6rem; font-weight: 700; line-height: 1; }
-.event-info h4 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--forest); margin-bottom: 0.2rem; }
+.event-info h2 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--forest); margin-bottom: 0.2rem; }
 .event-info p { font-size: 0.85rem; color: var(--text-muted); }
 .event-meta { display: flex; flex-direction: column; gap: 0.3rem; align-items: stretch; }
 .event-badge { display: block; width: 100%; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.7rem; border-radius: 0.75rem; line-height: 1.4; text-align: center; white-space: normal; word-break: break-word; }
@@ -186,7 +199,7 @@ section { padding: 5rem 2rem; }
 .btn-rsvp:hover { background: var(--forest); }
 
 .booking-card { background: var(--surface-deep); color: var(--text); border-radius: 1.5rem; padding: 2rem; position: sticky; top: 90px; }
-.booking-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--forest); margin-bottom: 0.5rem; }
+.booking-card h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--forest); margin-bottom: 0.5rem; }
 .booking-card > p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
 .form-group { margin-bottom: 1rem; }
 .form-group label { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
@@ -244,7 +257,16 @@ section { padding: 5rem 2rem; }
   margin-bottom: 1.25rem;
 }
 .home-intro-text p:last-child { margin-bottom: 0; }
-.home-intro-text a { color: var(--sage-dark); font-weight: 700; text-decoration: underline; }
+/* Inline links inside body copy. Without this they fall back to the
+   browser's default blue, which is jarring against this palette. */
+.home-intro-text a,
+.prose-links a {
+  color: var(--sage-dark);
+  font-weight: 700;
+  text-decoration: underline;
+}
+.home-intro-text a:hover,
+.prose-links a:hover { color: var(--ink); }
 
 .home-teasers { background: var(--cream); }
 .teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -314,7 +336,7 @@ footer.site-footer .footer-newsletter {
   padding: 1.5rem;
   border-radius: 1rem;
 }
-footer.site-footer .footer-newsletter h3 {
+footer.site-footer .footer-newsletter h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem;
   margin-bottom: 0.75rem;
