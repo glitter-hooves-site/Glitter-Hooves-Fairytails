@@ -67,7 +67,19 @@ astro.config.mjs                  site URL, sitemap integration
 ## How to do common edits
 
 ### Add an event
-Edit `src/data/events.ts`. Append to `RAW_EVENTS` — order doesn't matter, the module sorts by `date` and filters out past events automatically. Set `date: new Date('YYYY-MM-DD')` for dated events; use `displayMonth`/`displayDay` overrides for recurring or TBA experiences. Set `rsvpUrl` for external registration links — the RSVP button renders automatically when present. Event schema JSON-LD is emitted for any event with a real `date`.
+Edit `src/data/events.ts`. Append to `RAW_EVENTS` — order doesn't matter, the module sorts by date and drops past events automatically. Use `displayMonth`/`displayDay` overrides instead of a date for recurring or TBA experiences. Set `rsvpUrl` for external registration links; the RSVP button renders automatically when present. Event schema JSON-LD is emitted for any event with a real date.
+
+Dates use the `localDate` helper, **never** `new Date('YYYY-MM-DD')`:
+
+```ts
+{ date: localDate('2026-08-15'), title: '...', time: '...', price: '...', seats: '...' },
+```
+
+`new Date('2026-08-15')` parses as UTC midnight per spec, which reads as the *previous* day anywhere west of UTC. `localDate` builds from calendar parts instead.
+
+Event dates always mean **America/New_York** (the farm's timezone), regardless of where the build runs — `todayAtFarm()` pins the past-event cutoff to the farm's own calendar day, so a UTC CI runner won't retire an event at 8pm ET while it's still happening. An event stays listed through the whole of its own day at the farm.
+
+Because the filter runs at **build time**, a past event doesn't disappear from the live site until the next deploy.
 
 ### Add a photo
 1. Drop the file in the matching subfolder under `public/images/`.

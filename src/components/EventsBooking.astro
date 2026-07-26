@@ -1,5 +1,5 @@
 ---
-import { EVENTS, eventMonthLabel, eventDayLabel } from '../data/events.ts';
+import { EVENTS, eventMonthLabel, eventDayLabel, toISODate } from '../data/events.ts';
 
 // Event schema JSON-LD — only for events with a real date, so search
 // engines can surface them as rich results.
@@ -9,7 +9,7 @@ const eventJsonLd = EVENTS
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: ev.title,
-    startDate: ev.date!.toISOString().slice(0, 10),
+    startDate: toISODate(ev.date!),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
     location: {
