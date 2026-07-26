@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { image } from '../data/photos.ts';
 ---
 <BaseLayout title="Our Animals — Glitter Hooves & Fairytails" description="Meet Piper, Petunia, and the gentle animals who call our farm home.">
 
@@ -7,23 +9,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="container">
     <div class="section-header fade-up">
       <span class="section-label">Meet the Crew</span>
-      <h2 class="section-title">Our gentle animals</h2>
+      <h1 class="section-title">Our gentle animals</h1>
       <p class="section-subtitle">Every animal at Glitter Hooves has a story and a personality all their own.</p>
     </div>
     <div class="animals-grid">
       <div class="animal-card fade-up">
-        <img src="/images/animals/piper/piper-portrait.jpg" alt="Piper" />
+        <Image
+          src={image('animals/piper/piper-portrait.jpg')}
+          alt="Piper, a black-and-white goat, standing in the grassy paddock by the fence"
+          width={600}
+          densities={[1, 2]}
+          format="webp"
+        />
         <div class="animal-card-body">
           <div class="animal-tag">Resident Goat</div>
-          <h3>Piper 🐐</h3>
+          <h2>Piper 🐐</h2>
           <p>Piper is playful and curious! She loves exploring, gentle pets, and being around people. She'll be the first to greet you at the gate.</p>
         </div>
       </div>
       <div class="animal-card fade-up">
-        <img src="/images/animals/petunia/petunia-portrait.jpg" alt="Petunia" />
+        <Image
+          src={image('animals/petunia/petunia-portrait.jpg')}
+          alt="Petunia, a dark goat with white markings, in the grass with a wisp of hay in her mouth"
+          width={600}
+          densities={[1, 2]}
+          format="webp"
+        />
         <div class="animal-card-body">
           <div class="animal-tag">Resident Goat</div>
-          <h3>Petunia 🌸</h3>
+          <h2>Petunia 🌸</h2>
           <p>Petunia is calm and affectionate. She enjoys quiet moments and is perfect for soothing, calming interactions. She is full of pure, gentle energy.</p>
         </div>
       </div>

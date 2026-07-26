@@ -47,17 +47,18 @@ src/
   data/
     events.ts                     Single source of truth for events + RSVP form
     photos.ts                     Single source of truth for photo galleries
-  styles/global.css               All site styles. CSS variables defined in :root.
-
-public/
-  CNAME                           Custom domain — do not delete
-  favicon.svg
-  robots.txt                      Points crawlers at the sitemap
-  images/
+  assets/images/                  Source photos, optimized at build by <Image>
     farm/                         "Life on the Farm" homepage scroller
     about/                        About page collage (1.jpeg is featured)
     animals/{piper,petunia}/      Per-animal photo folders
     events/                       Reserved for future event photos
+  styles/global.css               All site styles. CSS variables defined in :root.
+
+public/                           Served raw, byte for byte, NOT optimized
+  CNAME                           Custom domain — do not delete
+  favicon.svg
+  robots.txt                      Points crawlers at the sitemap
+  og-image.jpg                    1200x630 social card; needs a stable unhashed URL
 
 docs/design-system.md             Color tokens + usage rules. Read before changing colors.
 astro.config.mjs                  site URL, sitemap integration
@@ -82,9 +83,17 @@ Event dates always mean **America/New_York** (the farm's timezone), regardless o
 Because the filter runs at **build time**, a past event doesn't disappear from the live site until the next deploy.
 
 ### Add a photo
-1. Drop the file in the matching subfolder under `public/images/`.
-2. Add one line to the relevant array in `src/data/photos.ts` (`FARM_PHOTOS` for the homepage scroller, `ABOUT_PHOTOS` for the about-page collage). Order matters — first entry is featured/leftmost.
+1. Drop the file in the matching subfolder under **`src/assets/images/`** — not `public/`.
+2. Add one line to the relevant array in `src/data/photos.ts`, wrapping the path in `image()`:
+   ```ts
+   { src: image('farm/new-photo.jpg'), alt: 'Short description of what is in the photo' },
+   ```
+   `FARM_PHOTOS` is the homepage scroller, `ABOUT_PHOTOS` the about-page collage. Order matters — the first entry is featured/leftmost. A typo in the path fails the build with a list of what's actually available.
 3. Filenames: `lowercase-with-hyphens.jpg`, no spaces.
+
+Write real alt text describing what's in the frame — it's an image-search signal and an accessibility requirement. Don't ship `"farm photo"`.
+
+No need to resize before committing. Files under `src/assets/` are rendered through Astro's `<Image>`, which emits resized WebP with `width`/`height` and `loading="lazy"`. A 4.8 MB phone photo becomes ~40 kB. That only works from `src/assets/` — anything in `public/` is served raw at full size.
 
 ### Change a color
 Read `docs/design-system.md` first. Edit the token in `:root` at the top of `src/styles/global.css` rather than swapping raw hex codes inline. New tokens should be added to the doc.
@@ -94,7 +103,9 @@ Create `src/pages/new-page.astro`. Import and wrap content in `<BaseLayout title
 
 ## Conventions & gotchas
 
-- **Image paths are absolute from the site root**: `/images/farm/foo.jpg`, never `../public/images/...`. Files in `public/` are served as-is.
+- **Photos go through `<Image>` from `astro:assets`, never a bare `<img>` with a `/images/...` path.** Source files live in `src/assets/images/` and are resolved via `image()` from `src/data/photos.ts`. Bare `<img>` skips optimization and drops `width`/`height`, which regresses both LCP and CLS.
+- **`public/` is for files that need a stable, unhashed URL** — `CNAME`, `robots.txt`, `favicon.svg`, `og-image.jpg`. Everything there is served raw at full size. Don't put content photos in it.
+- **Every page needs exactly one `<h1>`.** Use `<h1 class="section-title">` for the page's lead heading; `.section-title` styles the same regardless of tag. Subordinate headings step down without skipping — several CSS selectors are tag-based (`.exp-card h2`, `.event-info h2`, `.animal-card h2`, `.booking-card h2`), so changing a heading tag means updating its selector too.
 - **Form submissions go to Formspree** (`https://formspree.io/f/maqavneq`). The booking form uses `fetch()` with `Accept: application/json` so the success message appears inline rather than navigating away. Don't switch back to a native form POST.
 - **Astro scripts in `<script>` blocks run on the client after streaming completes.** Event listeners must be attached after the elements exist; querying `document.getElementById` at the top of an inline script is fine because the script tag comes after the markup.
 - **The CSS token `--brown` was renamed to `--forest`** (it was a green hex all along). Don't reintroduce `--brown`.
@@ -104,12 +115,16 @@ Create `src/pages/new-page.astro`. Import and wrap content in `<BaseLayout title
 ## SEO
 
 - Per-page `<title>` and `<meta description>` come from `BaseLayout` props — always pass both.
-- Open Graph + Twitter Card tags use the same title/description, plus an `ogImage` prop (defaults to `/images/about/1.jpeg`).
-- Homepage carries a LocalBusiness JSON-LD with the Kittrell, NC address.
-- Sitemap generated automatically by `@astrojs/sitemap` at `/sitemap-index.xml`.
+- Every page has exactly one `<h1>` naming its subject. This is a primary topical signal; don't demote it to `<h2>` for styling reasons.
+- Open Graph + Twitter Card tags use the same title/description, plus an `ogImage` prop defaulting to `/og-image.jpg` (1200×630, in `public/` so the URL stays stable for social crawlers).
+- Homepage carries a LocalBusiness JSON-LD with the Kittrell, NC address. `/events/` emits Event JSON-LD per dated event.
+- Sitemap generated by `@astrojs/sitemap` at `/sitemap-index.xml`, with `lastmod`; the 404 is filtered out.
+- Custom `404.astro` links back into the site rather than dead-ending on GitHub's default page.
+
+**Still open** (needs info only the owner has): there's no phone number, email, or `/contact/` page anywhere on the site, and the LocalBusiness JSON-LD has no `telephone`, `openingHours`, `geo`, or street address. That's the largest remaining local-SEO gap.
 
 ## Out of scope
 
 - No backend, no database, no API routes. If a feature needs server-side state, surface that constraint rather than working around it.
 - No Tailwind, no CSS-in-JS. Styles live in `src/styles/global.css`.
-- No image optimization pipeline currently — files in `public/` are served raw. Resize large uploads before committing.
+- No CMS. Content lives in `.astro` pages and the `src/data/*.ts` files.

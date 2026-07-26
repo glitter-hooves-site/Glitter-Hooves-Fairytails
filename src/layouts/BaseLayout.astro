@@ -14,7 +14,10 @@ const {
   title,
   description = 'A peaceful farm offering trauma-informed, neurodivergent-friendly experiences with gentle animals and nature.',
   pathname = Astro.url.pathname,
-  ogImage = '/images/about/1.jpeg',
+  // Lives in public/ deliberately: social crawlers need a stable, unhashed
+  // URL, and it is pre-cropped to the 1200x630 that cards expect. Photos
+  // under src/assets get content-hashed filenames, which is wrong here.
+  ogImage = '/og-image.jpg',
 } = Astro.props;
 
 const canonical = new URL(pathname, Astro.site).toString();
@@ -68,6 +71,8 @@ const navLinks = [
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta property="og:image" content={ogImageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />

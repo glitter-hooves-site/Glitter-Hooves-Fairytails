@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { FARM_PHOTOS } from '../data/photos.ts';
 import { EVENTS, eventLongDate } from '../data/events.ts';
@@ -98,7 +99,8 @@ const nextEvent = EVENTS.find(ev => ev.date);
   <h2>Life on the Farm</h2>
   <div class="scroll-track">
     {FARM_PHOTOS.map(photo => (
-      <img src={photo.src} alt={photo.alt} loading="lazy" />
+      <!-- CSS pins these to 280x200; densities gives a 2x file for retina -->
+      <Image src={photo.src} alt={photo.alt} width={280} densities={[1, 2]} format="webp" />
     ))}
   </div>
 </section>

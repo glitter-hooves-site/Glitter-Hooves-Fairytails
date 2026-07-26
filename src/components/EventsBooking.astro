@@ -42,7 +42,7 @@ const eventJsonLd = EVENTS
             {day && <div class="day">{day}</div>}
           </div>
           <div class="event-info">
-            <h4>{ev.title}</h4>
+            <h2>{ev.title}</h2>
             <p>🕐 {ev.time} &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p>
           </div>
           <div class="event-meta">
@@ -58,7 +58,7 @@ const eventJsonLd = EVENTS
   </div>
 
   <div class="booking-card fade-up">
-    <h3>Reserve Farm Connection Visit</h3>
+    <h2>Reserve Farm Connection Visit</h2>
     <p>Fill out the form and we'll confirm your reservation within 24 hours.</p>
     <form id="bookingForm" action="https://formspree.io/f/maqavneq" method="POST" novalidate>
       <input type="hidden" name="event" value="Farm Connection Visit" />
