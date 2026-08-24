@@ -60,6 +60,13 @@ export const FARM_PHOTOS: Photo[] = [
   { src: image('farm/piper-and-emma.jpeg'),    alt: 'Emma snuggling Piper the goat' },
   { src: image('farm/3.jpeg'),                 alt: 'Two goats nose to nose on the roof of their pink playhouse beside a purple picket fence' },
   { src: image('farm/4.jpeg'),                 alt: 'A child and an adult crouching to greet three spotted goats at a farm event' },
+  { src: image('farm/child-and-adult-feeding-goat.jpg'),     alt: 'An adult kneeling beside a young child in sunglasses, offering a sprig of greenery to a goat' },
+  { src: image('farm/planting-zinnia-tire-garden.jpg'),      alt: 'A child in a white cap tending a red zinnia growing in a bright blue painted-tire planter' },
+  { src: image('farm/petting-goat-on-bench.jpg'),            alt: 'A child reaching out to pet a black-and-white goat standing on a wooden bench' },
+  { src: image('farm/digging-in-the-tire-garden.jpg'),       alt: 'A child digging with a hand trowel in a yellow painted-tire garden bed' },
+  { src: image('farm/offering-feed-to-goat.jpg'),            alt: 'A child in green frog boots offering a handful of feed to a goat in the play yard' },
+  { src: image('farm/kids-greeting-goats-by-the-shed.jpg'),  alt: 'Three children feeding and petting two goats beside the flower-painted goat shed' },
+  { src: image('farm/hammock-goat-snuggles.jpg'),            alt: 'A child laughing in a striped hammock with two goats curled up alongside' },
 ];
 
 // Photos on the About page. The first is featured large; the rest fill
