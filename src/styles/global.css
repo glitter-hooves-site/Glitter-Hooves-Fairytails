@@ -319,7 +319,8 @@ section { padding: 5rem 2rem; }
 .teaser-card:hover .teaser-link { color: var(--ink); }
 
 .home-support { background: var(--warm-white); }
-.support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+/* Three-up for three cards; two columns would orphan the last one. */
+.support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .cta-card-grid { max-width: none; margin: 0; }
 .cta-card-grid h3 {
   font-family: 'Playfair Display', serif;
