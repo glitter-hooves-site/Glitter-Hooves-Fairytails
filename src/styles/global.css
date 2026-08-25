@@ -319,8 +319,13 @@ section { padding: 5rem 2rem; }
 .teaser-card:hover .teaser-link { color: var(--ink); }
 
 .home-support { background: var(--warm-white); }
-.support-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.cta-card-grid { max-width: none; margin: 0; }
+/* Three-up for three cards; two columns would orphan the last one. */
+.support-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.cta-card-grid { max-width: none; margin: 0; display: flex; flex-direction: column; }
+/* Buttons sit on the card floor so they line up across the row whatever the
+   copy length. align-self keeps the link at its content width — as a flex
+   item it would otherwise stretch the full card. */
+.cta-card-grid .btn-primary { margin-top: auto; align-self: center; }
 .cta-card-grid h3 {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
