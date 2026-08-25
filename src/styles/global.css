@@ -279,7 +279,8 @@ section { padding: 5rem 2rem; }
 .home-teasers { background: var(--cream); }
 .teaser-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .teaser-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--warm-white);
   border: 1px solid var(--border);
   border-radius: 1.5rem;
@@ -306,10 +307,15 @@ section { padding: 5rem 2rem; }
   color: var(--forest);
   margin-bottom: 0.6rem;
 }
-.teaser-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; font-weight: 300; }
+.teaser-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; font-weight: 300; margin-bottom: 1.25rem; }
+/* margin-top: auto drops the link to the card floor so all three line up
+   whatever the copy length; the paragraph's margin-bottom guarantees a
+   minimum gap for the case where there is no slack to distribute.
+   align-self keeps it at content width rather than stretching. */
 .teaser-link {
   display: inline-block;
-  margin-top: 1.25rem;
+  align-self: flex-start;
+  margin-top: auto;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.06em;
