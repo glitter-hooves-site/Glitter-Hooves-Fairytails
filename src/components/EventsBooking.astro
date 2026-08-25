@@ -1,5 +1,5 @@
 ---
-import { EVENTS, eventMonthLabel, eventDayLabel, toISODate } from '../data/events.ts';
+import { EVENTS, eventMonthLabel, eventDayLabel, toISODate, FARM_LOCATION } from '../data/events.ts';
 
 // Event schema JSON-LD — only for events with a real date, so search
 // engines can surface them as rich results.
@@ -12,17 +12,18 @@ const eventJsonLd = EVENTS
     startDate: toISODate(ev.date!),
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     eventStatus: 'https://schema.org/EventScheduled',
-    location: {
+    location: (loc => ({
       '@type': 'Place',
-      name: 'Glitter Hooves & Fairytails Farm',
+      name: loc.name,
       address: {
         '@type': 'PostalAddress',
-        addressLocality: 'Kittrell',
-        addressRegion: 'NC',
-        postalCode: '27544',
+        ...(loc.street ? { streetAddress: loc.street } : {}),
+        addressLocality: loc.locality,
+        addressRegion: loc.region,
+        ...(loc.postalCode ? { postalCode: loc.postalCode } : {}),
         addressCountry: 'US',
       },
-    },
+    }))(ev.location ?? FARM_LOCATION),
     ...(ev.rsvpUrl ? { url: ev.rsvpUrl } : {}),
   }));
 ---
@@ -43,7 +44,7 @@ const eventJsonLd = EVENTS
           </div>
           <div class="event-info">
             <h2>{ev.title}</h2>
-            <p>🕐 {ev.time} &nbsp;·&nbsp; 📍 Glitter Hooves Farm</p>
+            <p>🕐 {ev.time} &nbsp;·&nbsp; 📍 {(ev.location ?? FARM_LOCATION).name}</p>
           </div>
           <div class="event-meta">
             <span class={`event-badge ${free ? 'badge-free' : 'badge-paid'}`}>{ev.price}</span>
