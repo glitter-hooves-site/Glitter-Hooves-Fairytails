@@ -90,7 +90,7 @@ const RAW_EVENTS: Event[] = [
   { date: localDate('2026-08-29'), title: 'Chill Act North Carolina — Durham', time: '8 AM – 6 PM',    price: 'Free',                                                             seats: 'Free admission',    rsvpUrl: 'https://www.chillact.com/event-details/chill-act-north-carolina-durham',
     location: { name: 'Durham Convention Center', street: '301 W Morgan St', locality: 'Durham', region: 'NC', postalCode: '27701' } },
   { date: localDate('2026-09-05'), title: 'Splash Into School',                 time: '12–3 PM',        price: '$20/child · adults & under 2 free',                                 seats: '35 tickets available', rsvpUrl: 'https://www.eventbrite.com/e/splash-into-school-tickets-1997153712516' },
-  { displayMonth: 'Sundays', displayDay: '', title: 'Teen Reset',                time: '3–5 PM',         price: '$125/month · $110 founding family rate',                            seats: 'Small Group'                  },
+  { displayMonth: 'Sundays', displayDay: '', title: 'Teen Reset',                time: '3–5 PM',         price: '$125/month · $110 founding family rate',                            seats: 'Small Group',                 rsvpUrl: 'https://form.jotform.com/261996546533066' },
   { displayMonth: 'Weekly', displayDay: '', title: 'Farm Connection Visits',     time: 'Varies',         price: '$45 includes 1 adult & 1 child · Additional: $30/child, $10/adult', seats: 'Private Experience' },
 ];
 
