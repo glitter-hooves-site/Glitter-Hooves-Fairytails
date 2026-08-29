@@ -172,6 +172,14 @@ section { padding: 5rem 2rem; }
 .event-list { display: flex; flex-direction: column; gap: 1rem; }
 .event-item { background: var(--warm-white); border: 1px solid var(--border); border-radius: 1.25rem; padding: 1.5rem 1.75rem; display: grid; grid-template-columns: 72px minmax(0, 1fr) minmax(140px, 200px); gap: 1.25rem; align-items: center; transition: box-shadow 0.2s, transform 0.2s; }
 .event-item:hover { box-shadow: 0 8px 30px rgba(107,66,38,0.1); transform: translateX(4px); }
+/* Each row is a share target: /events/#teen-reset. scroll-margin-top clears the
+   68px fixed nav, which would otherwise cover the row the link just jumped to.
+   :target makes it obvious which event a shared link meant. */
+.event-item { scroll-margin-top: 96px; }
+.event-item:target {
+  border-color: var(--sage);
+  box-shadow: 0 0 0 3px rgba(122,158,126,0.28);
+}
 .event-date-box { background: var(--sage); color: white; border-radius: 0.75rem; padding: 0.6rem; text-align: center; min-height: 72px; display: flex; flex-direction: column; justify-content: center; gap: 0.25rem; }
 .event-date-box .month { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .event-date-box .day { font-size: 1.6rem; font-weight: 700; line-height: 1; }

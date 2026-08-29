@@ -35,6 +35,17 @@ export interface Event {
   /** Override for the large number in the date box (defaults to day-of-month from `date`; empty string hides it). */
   displayDay?: string;
 
+  /** URL fragment for sharing a single event: /events/#teen-reset.
+   *
+   *  Set it explicitly rather than deriving it from the title — a derived
+   *  slug silently breaks every link already shared the moment the title
+   *  is reworded. Once published, treat a slug as permanent.
+   *
+   *  When you add an event, tell the owner its share URL:
+   *      https://glitterhoovesfairytails.org/events/#<slug>
+   *  That link is the whole point of the slug — it is what goes in Facebook
+   *  posts and Eventbrite descriptions. */
+  slug: string;
   title: string;
   time: string;
   price: string;
@@ -84,14 +95,14 @@ function todayAtFarm(): string {
 }
 
 const RAW_EVENTS: Event[] = [
-  { date: localDate('2026-06-27'), title: 'Founders Fairy & Folklore Farm Day', time: '10am-2pm',       price: '$25/person, or family 4 pack for $75',                              seats: '25 spots left',     rsvpUrl: 'https://www.eventbrite.com/e/founders-fairy-folklore-farm-day-tickets-1990928407461?aff=oddtdtcreator' },
-  { date: localDate('2026-06-30'), title: 'Gentle Hooves 4 Week Pilot Programs', time: 'Varies by date', price: '$99',                                                               seats: 'ALMOST FULL!' },
-  { date: localDate('2026-07-25'), title: 'Witchy Woodland Farm Night',          time: 'TBA',            price: '$45/person',                                                        seats: '19 spots left',     rsvpUrl: 'https://www.eventbrite.com/e/witchy-woodland-farm-night-tickets-1991739150415?aff=oddtdtcreator' },
-  { date: localDate('2026-08-29'), title: 'Chill Act North Carolina — Durham', time: '8 AM – 6 PM',    price: 'Free',                                                             seats: 'Free admission',    rsvpUrl: 'https://www.chillact.com/event-details/chill-act-north-carolina-durham',
+  { date: localDate('2026-06-27'), slug: 'founders-fairy-folklore', title: 'Founders Fairy & Folklore Farm Day', time: '10am-2pm',       price: '$25/person, or family 4 pack for $75',                              seats: '25 spots left',     rsvpUrl: 'https://www.eventbrite.com/e/founders-fairy-folklore-farm-day-tickets-1990928407461?aff=oddtdtcreator' },
+  { date: localDate('2026-06-30'), slug: 'gentle-hooves-pilot', title: 'Gentle Hooves 4 Week Pilot Programs', time: 'Varies by date', price: '$99',                                                               seats: 'ALMOST FULL!' },
+  { date: localDate('2026-07-25'), slug: 'witchy-woodland-farm-night', title: 'Witchy Woodland Farm Night',          time: 'TBA',            price: '$45/person',                                                        seats: '19 spots left',     rsvpUrl: 'https://www.eventbrite.com/e/witchy-woodland-farm-night-tickets-1991739150415?aff=oddtdtcreator' },
+  { date: localDate('2026-08-29'), slug: 'chill-act-durham', title: 'Chill Act North Carolina — Durham', time: '8 AM – 6 PM',    price: 'Free',                                                             seats: 'Free admission',    rsvpUrl: 'https://www.chillact.com/event-details/chill-act-north-carolina-durham',
     location: { name: 'Durham Convention Center', street: '301 W Morgan St', locality: 'Durham', region: 'NC', postalCode: '27701' } },
-  { date: localDate('2026-09-05'), title: 'Splash Into School',                 time: '12–3 PM',        price: '$20/child · adults & under 2 free',                                 seats: '35 tickets available', rsvpUrl: 'https://www.eventbrite.com/e/splash-into-school-tickets-1997153712516' },
-  { displayMonth: 'Sundays', displayDay: '', title: 'Teen Reset',                time: '3–5 PM',         price: '$125/month · $110 founding family rate',                            seats: 'Small Group',                 rsvpUrl: 'https://form.jotform.com/261996546533066' },
-  { displayMonth: 'Weekly', displayDay: '', title: 'Farm Connection Visits',     time: 'Varies',         price: '$45 includes 1 adult & 1 child · Additional: $30/child, $10/adult', seats: 'Private Experience' },
+  { date: localDate('2026-09-05'), slug: 'splash-into-school', title: 'Splash Into School',                 time: '12–3 PM',        price: '$20/child · adults & under 2 free',                                 seats: '35 tickets available', rsvpUrl: 'https://www.eventbrite.com/e/splash-into-school-tickets-1997153712516' },
+  { displayMonth: 'Sundays', displayDay: '', slug: 'teen-reset', title: 'Teen Reset',                time: '3–5 PM',         price: '$125/month · $110 founding family rate',                            seats: 'Small Group',                 rsvpUrl: 'https://form.jotform.com/261996546533066' },
+  { displayMonth: 'Weekly', displayDay: '', slug: 'farm-connection-visits', title: 'Farm Connection Visits',     time: 'Varies',         price: '$45 includes 1 adult & 1 child · Additional: $30/child, $10/adult', seats: 'Private Experience' },
 ];
 
 // -------------------- helpers --------------------
@@ -146,5 +157,19 @@ function sortAndFilter(events: Event[]): Event[] {
       return 0;
     });
 }
+
+// Slugs are the shareable anchors, so a duplicate would silently point two
+// events at one id and send half the shared links to the wrong row. Fail the
+// build instead.
+const duplicateSlugs = RAW_EVENTS
+  .map(ev => ev.slug)
+  .filter((slug, i, all) => all.indexOf(slug) !== i);
+if (duplicateSlugs.length) {
+  throw new Error(`Duplicate event slug(s): ${[...new Set(duplicateSlugs)].join(', ')}`);
+}
+
+/** Every event, including past ones. The list uses EVENTS; this exists so a
+ *  shared link to a finished event can still resolve if we ever want it to. */
+export const ALL_EVENTS: Event[] = RAW_EVENTS;
 
 export const EVENTS: Event[] = sortAndFilter(RAW_EVENTS);
