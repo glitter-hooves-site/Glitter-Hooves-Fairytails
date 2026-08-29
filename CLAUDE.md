@@ -82,6 +82,8 @@ Event dates always mean **America/New_York** (the farm's timezone), regardless o
 
 Because the filter runs at **build time**, a past event doesn't disappear from the live site until the next deploy.
 
+Every event needs a `slug`. It is the shareable anchor — `/events/#teen-reset` — so once an event has been advertised, treat its slug as permanent; changing it breaks every link already in the wild. Duplicates fail the build. Do not derive slugs from titles, or rewording a title will silently break shared links.
+
 ### Add a photo
 1. Drop the file in the matching subfolder under **`src/assets/images/`** — not `public/`.
 2. Add one line to the relevant array in `src/data/photos.ts`, wrapping the path in `image()`:

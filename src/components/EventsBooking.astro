@@ -37,7 +37,7 @@ const eventJsonLd = EVENTS
       const month = eventMonthLabel(ev);
       const day = eventDayLabel(ev);
       return (
-        <div class="event-item">
+        <div class="event-item" id={ev.slug}>
           <div class="event-date-box">
             <div class="month">{month}</div>
             {day && <div class="day">{day}</div>}
@@ -124,6 +124,45 @@ const eventJsonLd = EVENTS
     </div>
   </div>
 </div>
+
+<script>
+  // Shared links land as /events/#teen-reset. Getting the visitor onto the
+  // right row is fiddlier than it looks: the browser's own jump fires before
+  // stylesheets, webfonts and the fade-up animation have finished reflowing
+  // the page, and every one of those invalidates an earlier scroll. Measured
+  // here, a single early jump landed 443px short on mobile and the row it was
+  // meant to highlight was off screen.
+  //
+  // So rather than guess which reflow is the last one, re-apply on a short
+  // bounded schedule and stop as soon as the visitor takes over.
+  function jumpToHashedEvent() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+
+  if (location.hash) {
+    // Arriving on a hash means the link decides where we land, not the back
+    // button. Left on 'auto' the browser restores this URL's previous scroll
+    // position and silently overrides the jump.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+    let tries = 0;
+    const settle = setInterval(() => {
+      jumpToHashedEvent();
+      if (++tries >= 12) clearInterval(settle);
+    }, 100);
+    const stop = () => clearInterval(settle);
+    // Never fight someone who has started scrolling for themselves.
+    ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(e =>
+      window.addEventListener(e, stop, { once: true, passive: true }));
+    window.addEventListener('load', jumpToHashedEvent);
+  }
+
+  // Changing hash on an already-loaded page is a same-document navigation, so
+  // none of the above re-runs. Layout is settled by then, so one jump is enough.
+  window.addEventListener('hashchange', jumpToHashedEvent);
+</script>
 
 <script>
   type Field = HTMLInputElement | HTMLSelectElement;
