@@ -84,6 +84,16 @@ Because the filter runs at **build time**, a past event doesn't disappear from t
 
 Every event needs a `slug`. It is the shareable anchor — `/events/#teen-reset` — so once an event has been advertised, treat its slug as permanent; changing it breaks every link already in the wild. Duplicates fail the build. Do not derive slugs from titles, or rewording a title will silently break shared links.
 
+**Always report the share URL when you add an event.** Events are advertised by linking straight to their row:
+
+```
+https://glitterhoovesfairytails.org/events/#<slug>
+```
+
+The owner pastes these into Facebook posts, emails and Eventbrite descriptions, so finish any task that adds an event — or changes a slug — by giving them the full URL. Don't make them go and find it.
+
+There is deliberately **no copy-link button in the UI**. Visitors have no use for one; the anchors exist for the owner's own advertising. Don't add customer-facing share controls unless asked.
+
 ### Add a photo
 1. Drop the file in the matching subfolder under **`src/assets/images/`** — not `public/`.
 2. Add one line to the relevant array in `src/data/photos.ts`, wrapping the path in `image()`:

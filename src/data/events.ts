@@ -36,9 +36,15 @@ export interface Event {
   displayDay?: string;
 
   /** URL fragment for sharing a single event: /events/#teen-reset.
+   *
    *  Set it explicitly rather than deriving it from the title — a derived
    *  slug silently breaks every link already shared the moment the title
-   *  is reworded. Once published, treat a slug as permanent. */
+   *  is reworded. Once published, treat a slug as permanent.
+   *
+   *  When you add an event, tell the owner its share URL:
+   *      https://glitterhoovesfairytails.org/events/#<slug>
+   *  That link is the whole point of the slug — it is what goes in Facebook
+   *  posts and Eventbrite descriptions. */
   slug: string;
   title: string;
   time: string;
