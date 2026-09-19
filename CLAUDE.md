@@ -80,7 +80,7 @@ Dates use the `localDate` helper, **never** `new Date('YYYY-MM-DD')`:
 
 Event dates always mean **America/New_York** (the farm's timezone), regardless of where the build runs — `todayAtFarm()` pins the past-event cutoff to the farm's own calendar day, so a UTC CI runner won't retire an event at 8pm ET while it's still happening. An event stays listed through the whole of its own day at the farm.
 
-Because the filter runs at **build time**, a past event doesn't disappear from the live site until the next deploy.
+Because the filter runs at **build time**, a past event doesn't disappear from the live site until the next deploy. `deploy.yml` therefore rebuilds on a nightly cron (3am ET) as well as on push, so the listing stays honest between merges. Don't move the filter into client-side JS — crawlers index the initial HTML, so stale events and stale Event JSON-LD would still be served.
 
 Every event needs a `slug`. It is the shareable anchor — `/events/#teen-reset` — so once an event has been advertised, treat its slug as permanent; changing it breaks every link already in the wild. Duplicates fail the build. Do not derive slugs from titles, or rewording a title will silently break shared links.
 
