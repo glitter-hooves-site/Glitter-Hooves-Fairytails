@@ -3,6 +3,12 @@ name: Deploy Astro site to Pages
 on:
   push:
     branches: [main]
+  # Past events are filtered out at BUILD time, so the live page freezes on
+  # whatever "today" was at the last deploy. Without this, an event stays
+  # listed until someone happens to merge something. Rebuild nightly at
+  # 3am ET (2am EST) — comfortably after any event's day has ended at the farm.
+  schedule:
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 permissions:
