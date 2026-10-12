@@ -36,19 +36,21 @@ src/
     EventsBooking.astro           Event list + RSVP form (Formspree-backed)
     Newsletter.astro              Footer newsletter signup
     GlitterCanvas.astro           Decorative particle effect on every page
+    PhotoMosaic.astro             Uncropped masonry photo grid + full-screen viewer
   pages/
     index.astro                   /
     about.astro                   /about/
     animals.astro                 /animals/
     experiences.astro             /experiences/
     events.astro                  /events/
+    gallery.astro                 /gallery/
     shop.astro                    /shop/
     donate.astro                  /donate/
   data/
     events.ts                     Single source of truth for events + RSVP form
     photos.ts                     Single source of truth for photo galleries
   assets/images/                  Source photos, optimized at build by <Image>
-    farm/                         "Life on the Farm" homepage scroller
+    farm/                         Homepage photos + /gallery/
     about/                        About page collage (1.jpeg is featured)
     animals/{piper,petunia}/      Per-animal photo folders
     events/                       Reserved for future event photos
@@ -100,12 +102,12 @@ There is deliberately **no copy-link button in the UI**. Visitors have no use fo
    ```ts
    { src: image('farm/new-photo.jpg'), alt: 'Short description of what is in the photo' },
    ```
-   `FARM_PHOTOS` is the homepage scroller, `ABOUT_PHOTOS` the about-page collage. Order matters — the first entry is featured/leftmost. A typo in the path fails the build with a list of what's actually available.
+   `FARM_PHOTOS` feeds `/gallery/`; entries marked `feature: true` also show on the homepage. Keep exactly six featured, and pick high-resolution files for them, because they render largest. `ABOUT_PHOTOS` is the about-page collage. Order matters in every list. A typo in the path fails the build with a list of what's actually available.
 3. Filenames: `lowercase-with-hyphens.jpg`, no spaces.
 
 Write real alt text describing what's in the frame — it's an image-search signal and an accessibility requirement. Don't ship `"farm photo"`.
 
-No need to resize before committing. Files under `src/assets/` are rendered through Astro's `<Image>`, which emits resized WebP with `width`/`height` and `loading="lazy"`. A 4.8 MB phone photo becomes ~40 kB. That only works from `src/assets/` — anything in `public/` is served raw at full size.
+No need to resize before committing, but don't send small copies either: a 640px file looks soft when opened full-screen in the gallery viewer. Ask for originals. Files under `src/assets/` are rendered through Astro's `<Image>`, which emits resized WebP with `width`/`height` and `loading="lazy"`. A 4.8 MB phone photo becomes ~40 kB. That only works from `src/assets/` — anything in `public/` is served raw at full size.
 
 ### Change a color
 Read `docs/design-system.md` first. Edit the token in `:root` at the top of `src/styles/global.css` rather than swapping raw hex codes inline. New tokens should be added to the doc.

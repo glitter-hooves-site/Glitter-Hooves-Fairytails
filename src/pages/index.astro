@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { FARM_PHOTOS } from '../data/photos.ts';
+import PhotoMosaic from '../components/PhotoMosaic.astro';
+import { FEATURED_PHOTOS } from '../data/photos.ts';
 import { EVENTS, eventLongDate } from '../data/events.ts';
 
 // EVENTS is already sorted and filtered to upcoming; the first entry with
@@ -95,13 +95,16 @@ const nextEvent = EVENTS.find(ev => ev.date);
   </div>
 </section>
 
-<section class="photo-scroll">
-  <h2>Life on the Farm</h2>
-  <div class="scroll-track">
-    {FARM_PHOTOS.map(photo => (
-      <!-- CSS pins these to 280x200; densities gives a 2x file for retina -->
-      <Image src={photo.src} alt={photo.alt} width={280} densities={[1, 2]} format="webp" />
-    ))}
+<section class="home-photos">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;">
+      <span class="section-label">Life on the Farm</span>
+      <h2 class="section-title">Moments from the pasture</h2>
+    </div>
+    <PhotoMosaic photos={FEATURED_PHOTOS} />
+    <div class="home-photos-more">
+      <a href="/gallery/" class="btn-primary">See all photos</a>
+    </div>
   </div>
 </section>
 

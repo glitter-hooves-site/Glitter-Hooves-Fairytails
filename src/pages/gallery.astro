@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoMosaic from '../components/PhotoMosaic.astro';
+import { FARM_PHOTOS } from '../data/photos.ts';
+---
+<BaseLayout
+  title="Photo Gallery — Glitter Hooves & Fairytails"
+  description="Photos from our small farm in Kittrell, NC: goats, the fairy woods, the tire gardens, and families spending unhurried time with the animals."
+>
+
+<section>
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:center;">
+      <span class="section-label">Photo Gallery</span>
+      <h1 class="section-title">Life on the farm</h1>
+    </div>
+    <PhotoMosaic photos={FARM_PHOTOS} columns={4} />
+  </div>
+</section>
+
+</BaseLayout>
