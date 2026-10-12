@@ -31,7 +31,6 @@ const items = await Promise.all(
 
 <dialog class="lightbox" aria-label="Photo viewer">
   <img class="lightbox-img" alt="" />
-  <p class="lightbox-caption"></p>
   <button type="button" class="lightbox-close" aria-label="Close">✕</button>
   <button type="button" class="lightbox-prev" aria-label="Previous photo">‹</button>
   <button type="button" class="lightbox-next" aria-label="Next photo">›</button>
@@ -43,16 +42,13 @@ const items = await Promise.all(
   document.querySelectorAll<HTMLElement>('.mosaic').forEach(mosaic => {
     const dialog = mosaic.nextElementSibling as HTMLDialogElement;
     const img = dialog.querySelector<HTMLImageElement>('.lightbox-img')!;
-    const caption = dialog.querySelector<HTMLElement>('.lightbox-caption')!;
     const items = [...mosaic.querySelectorAll<HTMLButtonElement>('.mosaic-item')];
     let index = 0;
 
     const show = (i: number) => {
       index = (i + items.length) % items.length;
-      const alt = items[index].querySelector('img')!.alt;
       img.src = items[index].dataset.full!;
-      img.alt = alt;
-      caption.textContent = alt;
+      img.alt = items[index].querySelector('img')!.alt;
     };
 
     items.forEach((item, i) => item.addEventListener('click', () => {

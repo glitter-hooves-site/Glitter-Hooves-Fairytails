@@ -265,7 +265,6 @@ section { padding: 5rem 2rem; }
 .lightbox[open] { display: flex; }
 .lightbox::backdrop { background: transparent; }
 .lightbox-img { max-width: min(1200px, 92vw); max-height: 80vh; border-radius: 10px; }
-.lightbox-caption { color: #fff; text-align: center; max-width: 640px; font-size: 0.95rem; margin: 0; }
 .lightbox button {
   position: absolute;
   width: 48px; height: 48px; border-radius: 50%; border: 0;
